@@ -6,10 +6,15 @@ class MonetaryValue
 {
     private float $value;
 
-    public function __construct(float $value)
+    private function __construct(float $value)
     {
         $this->value = $value;
         $this->round();
+    }
+
+    public static function create(float $value): MonetaryValue
+    {
+        return new self($value);
     }
 
     public function value(): float
