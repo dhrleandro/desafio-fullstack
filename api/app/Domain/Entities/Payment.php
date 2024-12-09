@@ -92,7 +92,7 @@ class Payment
             'amount_charged' => $this->amountCharged->value(),
             'credit_remaining' => $this->creditRemaining->value(),
             'due_date' => $this->dueDate?->toUtcTimeString() ?? '',
-            'status' => $this->status
+            'status' => $this->status->value
         ];
     }
 

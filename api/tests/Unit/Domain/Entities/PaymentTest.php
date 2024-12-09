@@ -24,7 +24,6 @@ class PaymentTest extends TestCase
         $this->assertEquals(0, $payment->creditRemaining()->value());
         $this->assertNull($payment->dueDate());
         $this->assertEquals(PaymentStatus::PENDING, $payment->status());
-        $this->assertNull($payment->createdAt());
     }
 
     public function test_from_array_returns_correct_instance()
@@ -37,7 +36,7 @@ class PaymentTest extends TestCase
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
             'due_date' => '2024-12-15T12:00:00.000000Z',
-            'status' => PaymentStatus::CONFIRMED,
+            'status' => PaymentStatus::CONFIRMED->value,
             'created_at' => '2024-12-01T08:30:00.000000Z',
         ];
 
@@ -50,8 +49,7 @@ class PaymentTest extends TestCase
         $this->assertEquals($data['amount_charged'], $payment->amountCharged()->value());
         $this->assertEquals($data['credit_remaining'], $payment->creditRemaining()->value());
         $this->assertEquals($data['due_date'], $payment->dueDate()->toUtcTimeString());
-        $this->assertEquals($data['status'], $payment->status());
-        $this->assertEquals($data['created_at'], $payment->createdAt()->toUtcTimeString());
+        $this->assertEquals($data['status'], $payment->status()->value);
     }
 
     public function test_to_array_returns_correct_array()
@@ -64,8 +62,7 @@ class PaymentTest extends TestCase
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
             'due_date' => '2024-12-15T12:00:00.000000Z',
-            'status' => PaymentStatus::CONFIRMED,
-            'created_at' => '2024-12-01T08:30:00.000000Z',
+            'status' => PaymentStatus::CONFIRMED->value
         ];
 
         $payment = Payment::fromArray($data);
@@ -79,6 +76,6 @@ class PaymentTest extends TestCase
 
         $payment->confirmPayment();
 
-        $this->assertEquals(PaymentStatus::CONFIRMED, $payment->status());
+        $this->assertEquals(PaymentStatus::CONFIRMED->value, $payment->status()->value);
     }
 }

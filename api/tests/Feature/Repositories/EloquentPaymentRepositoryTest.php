@@ -44,7 +44,7 @@ class EloquentPaymentRepositoryTest extends TestCase
             'amount_charged' => 100,
             'credit_remaining' => 0,
             'due_date' => $expectedDueDate,
-            'status' => PaymentStatus::PENDING
+            'status' => PaymentStatus::PENDING->value
         ]);
 
         $paymentId = $this->repository->create($payment);
@@ -67,7 +67,7 @@ class EloquentPaymentRepositoryTest extends TestCase
         $payment = EloquentPayment::create([
             'contract_id' => 1,
             'plan_price' => 1000,
-            'status' => PaymentStatus::PENDING,
+            'status' => PaymentStatus::PENDING->value,
             'discount' => 0,
             'amount_charged' => 0,
             'credit_remaining' => 0,
@@ -82,7 +82,7 @@ class EloquentPaymentRepositoryTest extends TestCase
             'amount_charged' => 100,
             'credit_remaining' => 0,
             'due_date' => $expectedDueDate,
-            'status' => PaymentStatus::CONFIRMED
+            'status' => PaymentStatus::CONFIRMED->value
         ]);
 
         $result = $this->repository->update($updatedPayment);
@@ -111,7 +111,7 @@ class EloquentPaymentRepositoryTest extends TestCase
             'amount_charged' => 0,
             'credit_remaining' => 0,
             'due_date' => $expectedDueDate,
-            'status' => PaymentStatus::PENDING
+            'status' => PaymentStatus::PENDING->value
         ]);
 
         $result = $this->repository->update($payment);
