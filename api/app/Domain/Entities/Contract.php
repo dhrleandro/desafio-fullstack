@@ -39,7 +39,7 @@ class Contract
             $contract['id'] ?? null,
             $contract['plan_id'],
             $contract['active'],
-            $contract['created_at'] ?? null
+            new DateTimeWrapper($contract['created_at']) ?? null
         );
     }
 

@@ -85,7 +85,7 @@ class Plan
             'description' => $this->description,
             'number_of_clients' => $this->numberOfClients,
             'gigabytes_storage' => $this->gigabytesStorage,
-            'price' => $this->price,
+            'price' => $this->price->value(),
             'active' => $this->active,
             'created_at' => $this->createdAt?->toUtcTimeString() ?? '',
             'updated_at' => $this->updatedAt?->toUtcTimeString() ?? ''
