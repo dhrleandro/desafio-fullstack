@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('credit_remaining', 10, 2);
             $table->timestampTz('due_date')->nullable();
             $table->string('status');
-            $table->timestampTz('created_at')->useCurrent();
+            $table->timestampsTz();
 
             $table->foreign('contract_id')->references('id')->on('contracts');
         });

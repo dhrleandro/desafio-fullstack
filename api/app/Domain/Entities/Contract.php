@@ -44,7 +44,7 @@ class Contract
             $contract['user_id'],
             $contract['plan_id'],
             $contract['active'],
-            new DateTimeWrapper($contract['created_at']) ?? null
+            isset($contract['created_at']) ? new DateTimeWrapper($contract['created_at']) : null
         );
     }
 

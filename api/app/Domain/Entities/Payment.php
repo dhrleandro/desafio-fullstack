@@ -73,9 +73,9 @@ class Payment
         $discount = MonetaryValue::create($payment['discount']);
         $amountCharged =  MonetaryValue::create($payment['amount_charged']);
         $creditRemaining = MonetaryValue::create($payment['credit_remaining']);
-        $dueDate = $payment['due_date'] ? new DateTimeWrapper($payment['due_date']) : null;
+        $dueDate = isset($payment['due_date']) ? new DateTimeWrapper($payment['due_date']) : null;
         $status = $payment['status'];
-        $createdAt = $payment['created_at'] ? new DateTimeWrapper($payment['created_at']) : null;
+        $createdAt = isset($payment['created_at']) ? new DateTimeWrapper($payment['created_at']) : null;
 
         return new self($id,
             $contractId,

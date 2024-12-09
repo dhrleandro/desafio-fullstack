@@ -63,8 +63,8 @@ class Plan
         $gigabytesStorage = $plan["gigabytes_storage"];
         $price = MonetaryValue::create($plan["price"]);
         $active = $plan["active"];
-        $createdAt = $plan["created_at"] ? new DateTimeWrapper($plan["created_at"]) : null;
-        $updatedAt = $plan["updated_at"] ? new DateTimeWrapper($plan["updated_at"]) : null;
+        $createdAt = isset($plan["created_at"]) ? new DateTimeWrapper($plan["created_at"]) : null;
+        $updatedAt = isset($plan["updated_at"]) ? new DateTimeWrapper($plan["updated_at"]) : null;
         
         return new self(
             $id,

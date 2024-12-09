@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('plan_id');
             $table->boolean('active')->default(false);
-            $table->timestampTz('created_at')->useCurrent();
+            $table->timestampsTz();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('plan_id')->references('id')->on('plans');
