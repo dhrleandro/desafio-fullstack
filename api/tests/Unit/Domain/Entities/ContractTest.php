@@ -30,6 +30,7 @@ class ContractTest extends TestCase
             'plan_id' => 8,
             'active' => false,
             'created_at' => '2024-12-01T10:00:00.000000Z',
+            'updated_at' => '2024-12-01T10:00:00.000000Z',
         ];
 
         $contract = Contract::fromArray($data);
@@ -38,7 +39,8 @@ class ContractTest extends TestCase
         $this->assertEquals($data['user_id'], $contract->userId());
         $this->assertEquals($data['plan_id'], $contract->planId());
         $this->assertEquals($data['active'], $contract->active());
-        $this->assertEquals($data['created_at'], $contract->createdAt()->toUtcTimeString());
+        $this->assertEquals($data['created_at'], $contract->createdAt()?->toUtcTimeString());
+        $this->assertEquals($data['updated_at'], $contract->updatedAt()?->toUtcTimeString());
     }
 
     public function test_to_array_returns_correct_array()
@@ -49,6 +51,7 @@ class ContractTest extends TestCase
             'plan_id' => 8,
             'active' => true,
             'created_at' => '2024-12-01T10:00:00.000000Z',
+            'updated_at' => '2024-12-01T10:00:00.000000Z'
         ];
 
         $contract = Contract::fromArray($data);

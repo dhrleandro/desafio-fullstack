@@ -17,6 +17,8 @@ class Payment
     private MonetaryValue $creditRemaining;
     private ?DateTimeWrapper $dueDate;
     private PaymentStatus $status;
+    private ?DateTimeWrapper $createdAt;
+    private ?DateTimeWrapper $updatedAt;
 
     private function __construct(
         ?int $id,
@@ -26,7 +28,9 @@ class Payment
         MonetaryValue $amountCharged,
         MonetaryValue $creditRemaining,
         ?DateTimeWrapper $dueDate,
-        PaymentStatus $status = PaymentStatus::PENDING)
+        PaymentStatus $status = PaymentStatus::PENDING,
+        ?DateTimeWrapper $createdAt = null,
+        ?DateTimeWrapper $updatedAt = null)
     {
         $this->id = $id;
         $this->contractId = $contractId;
@@ -36,6 +40,8 @@ class Payment
         $this->creditRemaining = $creditRemaining;
         $this->dueDate = $dueDate;
         $this->status = $status;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     public static function create(
@@ -70,6 +76,8 @@ class Payment
         $creditRemaining = MonetaryValue::create($payment['credit_remaining']);
         $dueDate = new DateTimeWrapper($payment['due_date']);
         $status = PaymentStatus::from($payment['status']);
+        $createdAt = isset($payment["created_at"]) ? new DateTimeWrapper($payment["created_at"]) : null;
+        $updatedAt = isset($payment["updated_at"]) ? new DateTimeWrapper($payment["updated_at"]) : null;
 
         return new self($id,
             $contractId,
@@ -78,7 +86,9 @@ class Payment
             $amountCharged,
             $creditRemaining,
             $dueDate,
-            $status
+            $status,
+            $createdAt,
+            $updatedAt
         );
     }
 
@@ -92,7 +102,9 @@ class Payment
             'amount_charged' => $this->amountCharged->value(),
             'credit_remaining' => $this->creditRemaining->value(),
             'due_date' => $this->dueDate?->toUtcTimeString() ?? '',
-            'status' => $this->status->value
+            'status' => $this->status->value,
+            'created_at' => $this->createdAt?->toUtcTimeString() ?? '',
+            'updated_at' => $this->updatedAt?->toUtcTimeString() ?? '',
         ];
     }
 

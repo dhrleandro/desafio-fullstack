@@ -62,7 +62,9 @@ class PaymentTest extends TestCase
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
             'due_date' => '2024-12-15T12:00:00.000000Z',
-            'status' => PaymentStatus::CONFIRMED->value
+            'status' => PaymentStatus::CONFIRMED->value,
+            'created_at' => '2024-12-01T08:30:00.000000Z',
+            'updated_at' => '2024-12-01T08:30:00.000000Z',
         ];
 
         $payment = Payment::fromArray($data);

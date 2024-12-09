@@ -12,19 +12,22 @@ class Contract
     private int $planId;
     private bool $active;
     private ?DateTimeWrapper $createdAt;
+    private ?DateTimeWrapper $updatedAt;
 
     private function __construct(
         ?int $id,
         int $userId,
         int $planId,
         bool $active,
-        ?DateTimeWrapper $createdAt = null)
+        ?DateTimeWrapper $createdAt = null,
+        ?DateTimeWrapper $updatedAt = null)
     {
         $this->id = $id;
         $this->userId = $userId;
         $this->planId = $planId;
         $this->active = $active;
         $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     public static function create(int $userId, int $planId, bool $active): Contract
@@ -44,7 +47,8 @@ class Contract
             $contract['user_id'],
             $contract['plan_id'],
             $contract['active'],
-            isset($contract['created_at']) ? new DateTimeWrapper($contract['created_at']) : null
+            isset($contract['created_at']) ? new DateTimeWrapper($contract['created_at']) : null,
+            isset($contract['updated_at']) ? new DateTimeWrapper($contract['updated_at']) : null
         );
     }
 
@@ -55,7 +59,8 @@ class Contract
             'user_id' => $this->userId,
             'plan_id' => $this->planId,
             'active' => $this->active,
-            'created_at' => $this->createdAt?->toUtcTimeString() ?? ''
+            'created_at' => $this->createdAt?->toUtcTimeString() ?? '',
+            'updated_at' => $this->updatedAt?->toUtcTimeString() ?? '',
         ];
     }
 
@@ -82,5 +87,10 @@ class Contract
     public function createdAt(): ?DateTimeWrapper
     {
         return $this->createdAt;
+    }
+
+    public function updatedAt(): ?DateTimeWrapper
+    {
+        return $this->updatedAt;
     }
 }
