@@ -38,6 +38,13 @@ class DateTimeWrapper
         $this->date->setTimezone(new \DateTimeZone(UTC_TIMEZONE));
     }
 
+    public static function create(
+        string|\DateTime|DateTimeWrapper $time = 'now',
+        \DateTimeZone|null $timezone = new \DateTimeZone(UTC_TIMEZONE))
+    {
+        return new DateTimeWrapper($time, $timezone);
+    }
+
     public function copy(): DateTimeWrapper
     {
         $copy = new DateTimeWrapper(clone $this->date);
@@ -63,6 +70,16 @@ class DateTimeWrapper
     public function copyDateImmutable(): \DateTimeImmutable
     {
         return new \DateTimeImmutable($this->date->format(DATE_FORMAT_WITH_TIMEZONE));
+    }
+
+    public function isBefore(DateTimeWrapper $to): bool
+    {
+        return $this->date < $to->copyDate();
+    }
+
+    public function isAfter(DateTimeWrapper $to): bool
+    {
+        return $this->date > $to->copyDate();
     }
 
     public function differenceTo(\DateTime $toDate): \DateInterval

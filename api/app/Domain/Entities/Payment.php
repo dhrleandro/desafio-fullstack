@@ -15,7 +15,7 @@ class Payment
     private MonetaryValue $discount;
     private MonetaryValue $amountCharged;
     private MonetaryValue $creditRemaining;
-    private ?DateTimeWrapper $dueDate;
+    private DateTimeWrapper $dueDate;
     private PaymentStatus $status;
     private ?DateTimeWrapper $createdAt;
     private ?DateTimeWrapper $updatedAt;
@@ -27,7 +27,7 @@ class Payment
         MonetaryValue $discount,
         MonetaryValue $amountCharged,
         MonetaryValue $creditRemaining,
-        ?DateTimeWrapper $dueDate,
+        DateTimeWrapper $dueDate,
         PaymentStatus $status = PaymentStatus::PENDING,
         ?DateTimeWrapper $createdAt = null,
         ?DateTimeWrapper $updatedAt = null)
@@ -38,7 +38,10 @@ class Payment
         $this->discount = $discount;
         $this->amountCharged = $amountCharged;
         $this->creditRemaining = $creditRemaining;
-        $this->dueDate = $dueDate;
+
+        $normalizedDueDate = $dueDate->format('Y-m-d 00:00:00 T');
+        $this->dueDate = new DateTimeWrapper($normalizedDueDate);
+
         $this->status = $status;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -46,13 +49,13 @@ class Payment
 
     public static function create(
         int $contractId,
-        MonetaryValue $planPrice): Payment
+        MonetaryValue $planPrice,
+        DateTimeWrapper $dueDate): Payment
     {
         $id = null;
         $discount = MonetaryValue::create(0);
         $amountCharged = MonetaryValue::create(0);
         $creditRemaining = MonetaryValue::create(0);
-        $dueDate = null;
         $status = PaymentStatus::PENDING;
 
         return new self($id,
@@ -113,6 +116,11 @@ class Payment
         $this->status = PaymentStatus::CONFIRMED;
     }
 
+    public function cancelPayment(): void
+    {
+        $this->status = PaymentStatus::CANCELED;
+    }
+
     public function id(): ?int
     {
         return $this->id;
@@ -143,7 +151,7 @@ class Payment
         return $this->creditRemaining;
     }
 
-    public function dueDate(): ?DateTimeWrapper
+    public function dueDate(): DateTimeWrapper
     {
         return $this->dueDate;
     }

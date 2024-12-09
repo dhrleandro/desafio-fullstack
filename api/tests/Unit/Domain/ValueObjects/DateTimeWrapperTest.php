@@ -195,4 +195,22 @@ class DateTimeWrapperTest extends TestCase
             $date->toUTCTimeString()
         );
     }
+
+    public function test_is_before_should_return_a_correct_boolean()
+    {
+        $from = new DateTimeWrapper('2024-01-15 14:23:40 UTC');
+        $to = new DateTimeWrapper('2024-01-16 14:23:40 UTC');
+
+        $this->assertTrue($from->isBefore($to));
+        $this->assertFalse($to->isBefore($from));
+    }
+
+    public function test_is_after_should_return_a_correct_boolean()
+    {
+        $from = new DateTimeWrapper('2025-02-15 14:23:40 UTC');
+        $to = new DateTimeWrapper('2024-01-16 14:23:40 UTC');
+
+        $this->assertTrue($from->isAfter($to));
+        $this->assertFalse($to->isAfter($from));
+    }
 }

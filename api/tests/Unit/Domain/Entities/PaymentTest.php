@@ -3,6 +3,7 @@
 namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\Payment;
+use App\Domain\ValueObjects\DateTimeWrapper;
 use App\Domain\ValueObjects\MonetaryValue;
 use App\Domain\ValueObjects\PaymentStatus;
 use PHPUnit\Framework\TestCase;
@@ -13,8 +14,9 @@ class PaymentTest extends TestCase
     {
         $contractId = 1;
         $planPrice = MonetaryValue::create(99.99);
+        $dueDate = new DateTimeWrapper('2024-12-15T12:00:00.000000Z');
 
-        $payment = Payment::create($contractId, $planPrice);
+        $payment = Payment::create($contractId, $planPrice, $dueDate);
 
         $this->assertNull($payment->id());
         $this->assertEquals($contractId, $payment->contractId());
@@ -22,7 +24,7 @@ class PaymentTest extends TestCase
         $this->assertEquals(0, $payment->discount()->value());
         $this->assertEquals(0, $payment->amountCharged()->value());
         $this->assertEquals(0, $payment->creditRemaining()->value());
-        $this->assertNull($payment->dueDate());
+        $this->assertEquals($dueDate, $payment->dueDate());
         $this->assertEquals(PaymentStatus::PENDING, $payment->status());
     }
 
@@ -74,7 +76,11 @@ class PaymentTest extends TestCase
 
     public function test_confirm_payment_updates_status_correctly()
     {
-        $payment = Payment::create(1, MonetaryValue::create(100));
+        $payment = Payment::create(
+            1,
+            MonetaryValue::create(100),
+            new DateTimeWrapper('2024-12-15T12:00:00.000000Z')
+        );
 
         $payment->confirmPayment();
 
