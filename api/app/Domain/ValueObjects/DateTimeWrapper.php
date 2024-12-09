@@ -61,7 +61,7 @@ class DateTimeWrapper
 
     public function copyDateImmutable(): \DateTimeImmutable
     {
-        return new \DateTimeImmutable($this->date->format('Y-m-d 00:00'));
+        return new \DateTimeImmutable($this->date->format(DATE_FORMAT_WITH_TIMEZONE));
     }
 
     public function differenceTo(\DateTime $toDate): \DateInterval
@@ -89,7 +89,7 @@ class DateTimeWrapper
      * 
      * @return DateTimeWrapper
      */
-    function getNextMonthWithSameDayFromDate(\DateTimeImmutable $from, int $addMonths = 1): DateTimeWrapper {
+    public function getNextMonthWithSameDayFromDate(\DateTimeImmutable $from, int $addMonths = 1): DateTimeWrapper {
         if ($from->getTimezone()->getName() != UTC_TIMEZONE) {
             throw new \InvalidArgumentException('The date must be in UTC');
         }
@@ -109,11 +109,11 @@ class DateTimeWrapper
         return new DateTimeWrapper($nextMonth->format(DATE_FORMAT_WITH_TIMEZONE));
     }
 
-    function getNextMonthWithSameDay(int $addMonths = 1): DateTimeWrapper {
+    public function getNextMonthWithSameDay(int $addMonths = 1): DateTimeWrapper {
         return $this->getNextMonthWithSameDayFromDate($this->copyDateImmutable(), $addMonths);
     }
 
-    function getNormalizedMonthDiff(\DateTimeImmutable $to): int {
+    public function getNormalizedMonthDiff(\DateTimeImmutable $to): int {
         if ($to->getTimezone()->getName() != UTC_TIMEZONE) {
             throw new \InvalidArgumentException('The date must be in UTC');
         }
