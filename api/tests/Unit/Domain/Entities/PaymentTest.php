@@ -36,9 +36,9 @@ class PaymentTest extends TestCase
             'discount' => 20.50,
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
-            'due_date' => '2024-12-15 12:00:00 UTC',
+            'due_date' => '2024-12-15T12:00:00.000000Z',
             'status' => PaymentStatus::CONFIRMED,
-            'created_at' => '2024-12-01 08:30:00 UTC',
+            'created_at' => '2024-12-01T08:30:00.000000Z',
         ];
 
         $payment = Payment::fromArray($data);
@@ -63,9 +63,9 @@ class PaymentTest extends TestCase
             'discount' => 20.50,
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
-            'due_date' => '2024-12-15 12:00:00 UTC',
+            'due_date' => '2024-12-15T12:00:00.000000Z',
             'status' => PaymentStatus::CONFIRMED,
-            'created_at' => '2024-12-01 08:30:00 UTC',
+            'created_at' => '2024-12-01T08:30:00.000000Z',
         ];
 
         $payment = Payment::fromArray($data);

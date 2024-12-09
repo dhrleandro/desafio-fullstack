@@ -37,8 +37,8 @@ class PlanTest extends TestCase
             'gigabytes_storage' => 2000,
             'price' => 499.99,
             'active' => true,
-            'created_at' => '2024-12-01 12:00:00 UTC',
-            'updated_at' => '2024-12-05 14:00:00 UTC',
+            'created_at' => '2024-12-01T12:00:00.000000Z',
+            'updated_at' => '2024-12-05T14:00:00.000000Z',
         ];
 
         $plan = Plan::fromArray($data);
@@ -62,8 +62,8 @@ class PlanTest extends TestCase
             'gigabytes_storage' => 2000,
             'price' => 499.99,
             'active' => true,
-            'created_at' => '2024-12-01 12:00:00 UTC',
-            'updated_at' => '2024-12-05 14:00:00 UTC',
+            'created_at' => '2024-12-01T12:00:00.000000Z',
+            'updated_at' => '2024-12-05T14:00:00.000000Z',
         ];
 
         $plan = Plan::fromArray($data);

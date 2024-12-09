@@ -29,7 +29,7 @@ class ContractTest extends TestCase
             'user_id' => 1,
             'plan_id' => 8,
             'active' => false,
-            'created_at' => '2024-12-01 10:00:00 UTC',
+            'created_at' => '2024-12-01T10:00:00.000000Z',
         ];
 
         $contract = Contract::fromArray($data);
@@ -48,7 +48,7 @@ class ContractTest extends TestCase
             'user_id' => 1,
             'plan_id' => 8,
             'active' => true,
-            'created_at' => '2024-12-01 10:00:00 UTC',
+            'created_at' => '2024-12-01T10:00:00.000000Z',
         ];
 
         $contract = Contract::fromArray($data);

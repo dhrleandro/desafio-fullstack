@@ -186,9 +186,9 @@ class DateTimeWrapperTest extends TestCase
 
     public function test_to_utc_time_string_should_return_a_correct_string()
     {
-        $expected = '2024-01-15 14:23:40 UTC';
+        $expected = '2024-01-15T14:23:40.000000Z';
 
-        $date = new DateTimeWrapper('2024-01-15 14:23:40 UTC');
+        $date = new DateTimeWrapper('2024-01-15T14:23:40.000000Z');
 
         $this->assertEquals(
             $expected, 

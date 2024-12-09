@@ -6,6 +6,7 @@ const UTC_TIMEZONE = 'UTC';
 
 const DATE_FORMAT_WITH_TIMEZONE = 'Y-m-d H:i:s T';
 const DATE_FORMAT_NORMALIZED = 'Y-m-01 00:00:00 T';
+const DATE_FORMAT_ISO8601 = 'Y-m-d\TH:i:s.u\Z';
 
 class DateTimeWrapper
 {
@@ -137,6 +138,6 @@ class DateTimeWrapper
 
     public function toUTCTimeString(): string
     {
-        return $this->date->format(DATE_FORMAT_WITH_TIMEZONE);
+        return $this->date->format(DATE_FORMAT_ISO8601);
     }
 }
