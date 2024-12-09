@@ -5,7 +5,7 @@ namespace App\UseCases;
 use App\Models\Contract;
 use App\Repositories\PaymentRepository;
 
-class PaymentsUseCases
+class PaymentUseCases
 {
     private PaymentRepository $paymentRepository;
 

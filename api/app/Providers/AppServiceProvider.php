@@ -6,8 +6,8 @@ use App\Repositories\ContractRepository;
 use App\Repositories\Implementations\EloquentContractRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\Implementations\EloquentPaymentRepository;
-use App\UseCases\ContractsUseCases;
-use App\UseCases\PaymentsUseCases;
+use App\UseCases\ContractUseCases;
+use App\UseCases\PaymentUseCases;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 
@@ -22,8 +22,8 @@ class AppServiceProvider extends ServiceProvider
         ContractRepository::class => EloquentContractRepository::class,
         PaymentRepository::class => EloquentPaymentRepository::class,
 
-        ContractsUseCases::class => ContractsUseCases::class,
-        PaymentsUseCases::class => PaymentsUseCases::class,
+        ContractUseCases::class => ContractUseCases::class,
+        PaymentUseCases::class => PaymentUseCases::class,
     ];
 
     /**

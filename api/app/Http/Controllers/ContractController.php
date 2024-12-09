@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use \Illuminate\Http\JsonResponse;
-use App\UseCases\ContractsUseCases;
+use App\UseCases\ContractUseCases;
 
 class ContractController extends Controller
 {
-    protected ContractsUseCases $contractUseCases;
+    protected ContractUseCases $contractUseCases;
 
-    public function __construct(ContractsUseCases $contractUseCases)
+    public function __construct(ContractUseCases $contractUseCases)
     {
         $this->contractUseCases = $contractUseCases;
     }

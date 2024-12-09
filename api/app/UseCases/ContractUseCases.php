@@ -5,7 +5,7 @@ namespace App\UseCases;
 use \App\Domain\Entities\Contract;
 use App\Repositories\ContractRepository;
 
-class ContractsUseCases
+class ContractUseCases
 {
     private ContractRepository $contractRepository;
 

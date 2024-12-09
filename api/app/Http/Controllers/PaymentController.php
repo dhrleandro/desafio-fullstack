@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use \Illuminate\Http\JsonResponse;
-use App\UseCases\PaymentsUseCases;
+use App\UseCases\PaymentUseCases;
 
 class PaymentController extends Controller
 {
-    protected PaymentsUseCases $paymentUseCases;
+    protected PaymentUseCases $paymentUseCases;
 
-    public function __construct(PaymentsUseCases $paymentUseCases)
+    public function __construct(PaymentUseCases $paymentUseCases)
     {
         $this->paymentUseCases = $paymentUseCases;
     }
