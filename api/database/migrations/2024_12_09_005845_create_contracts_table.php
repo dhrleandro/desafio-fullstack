@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->integer('number_of_clients');
-            $table->integer('gigabytes_storage');
-            $table->decimal('price', 13, 2);
-            $table->boolean('active')->default(true);
-            $table->timestampsTz();
+            $table->unsignedBigInteger('plan_id');
+            $table->boolean('active')->default(false);
+            $table->timestampTz('created_at')->useCurrent();
+
+            $table->foreign('plan_id')->references('id')->on('plans');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('contracts');
     }
 };
