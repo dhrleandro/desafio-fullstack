@@ -19,7 +19,7 @@ class EloquentPaymentRepository implements PaymentRepository
     {
         $eloquentPayment = EloquentPayment::find($payment->id());
         if (!$eloquentPayment) {
-            throw new ModelNotFoundException("Payment id {$payment->id()} not found");
+            return false;
         }
 
         return $eloquentPayment->update($payment->toArray());

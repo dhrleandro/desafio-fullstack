@@ -18,7 +18,7 @@ class EloquentContractRepository implements ContractRepository
     {
         $eloquentContract = EloquentContract::find($contract->id());
         if (!$eloquentContract) {
-            throw new ModelNotFoundException("Contract id {$contract->id()} not found");
+            return false;
         }
 
         return $eloquentContract->update($contract->toArray());

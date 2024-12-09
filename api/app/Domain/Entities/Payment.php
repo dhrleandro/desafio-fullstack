@@ -17,7 +17,6 @@ class Payment
     private MonetaryValue $creditRemaining;
     private ?DateTimeWrapper $dueDate;
     private PaymentStatus $status;
-    private ?DateTimeWrapper $createdAt;
 
     private function __construct(
         ?int $id,
@@ -27,8 +26,7 @@ class Payment
         MonetaryValue $amountCharged,
         MonetaryValue $creditRemaining,
         ?DateTimeWrapper $dueDate,
-        PaymentStatus $status = PaymentStatus::PENDING,
-        ?DateTimeWrapper $createdAt = null)
+        PaymentStatus $status = PaymentStatus::PENDING)
     {
         $this->id = $id;
         $this->contractId = $contractId;
@@ -38,7 +36,6 @@ class Payment
         $this->creditRemaining = $creditRemaining;
         $this->dueDate = $dueDate;
         $this->status = $status;
-        $this->createdAt = $createdAt;
     }
 
     public static function create(
@@ -51,7 +48,6 @@ class Payment
         $creditRemaining = MonetaryValue::create(0);
         $dueDate = null;
         $status = PaymentStatus::PENDING;
-        $createdAt = null;
 
         return new self($id,
             $contractId,
@@ -60,8 +56,7 @@ class Payment
             $amountCharged,
             $creditRemaining,
             $dueDate,
-            $status,
-            $createdAt
+            $status
         );
     }
 
@@ -73,9 +68,8 @@ class Payment
         $discount = MonetaryValue::create($payment['discount']);
         $amountCharged =  MonetaryValue::create($payment['amount_charged']);
         $creditRemaining = MonetaryValue::create($payment['credit_remaining']);
-        $dueDate = isset($payment['due_date']) ? new DateTimeWrapper($payment['due_date']) : null;
-        $status = $payment['status'];
-        $createdAt = isset($payment['created_at']) ? new DateTimeWrapper($payment['created_at']) : null;
+        $dueDate = new DateTimeWrapper($payment['due_date']);
+        $status = PaymentStatus::from($payment['status']);
 
         return new self($id,
             $contractId,
@@ -84,8 +78,7 @@ class Payment
             $amountCharged,
             $creditRemaining,
             $dueDate,
-            $status,
-            $createdAt
+            $status
         );
     }
 
@@ -99,8 +92,7 @@ class Payment
             'amount_charged' => $this->amountCharged->value(),
             'credit_remaining' => $this->creditRemaining->value(),
             'due_date' => $this->dueDate?->toUtcTimeString() ?? '',
-            'status' => $this->status,
-            'created_at' => $this->createdAt?->toUtcTimeString() ?? ''
+            'status' => $this->status
         ];
     }
 
@@ -147,10 +139,5 @@ class Payment
     public function status(): PaymentStatus
     {
         return $this->status;
-    }
-
-    public function createdAt(): ?DateTimeWrapper
-    {
-        return $this->createdAt;
     }
 }
