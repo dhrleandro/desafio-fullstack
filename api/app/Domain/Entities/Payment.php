@@ -39,8 +39,7 @@ class Payment
         $this->amountCharged = $amountCharged;
         $this->creditRemaining = $creditRemaining;
 
-        $normalizedDueDate = $dueDate->format('Y-m-d 00:00:00 T');
-        $this->dueDate = new DateTimeWrapper($normalizedDueDate);
+        $this->dueDate = $dueDate->copy()->setTime(0, 0, 0, 0);
 
         $this->status = $status;
         $this->createdAt = $createdAt;

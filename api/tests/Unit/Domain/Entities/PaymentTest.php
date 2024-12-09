@@ -17,6 +17,7 @@ class PaymentTest extends TestCase
         $dueDate = new DateTimeWrapper('2024-12-15T12:00:00.000000Z');
 
         $payment = Payment::create($contractId, $planPrice, $dueDate);
+        $dueDate->setTime(0, 0, 0, 0);
 
         $this->assertNull($payment->id());
         $this->assertEquals($contractId, $payment->contractId());
@@ -37,7 +38,7 @@ class PaymentTest extends TestCase
             'discount' => 20.50,
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
-            'due_date' => '2024-12-15T12:00:00.000000Z',
+            'due_date' => '2024-12-15T00:00:00.000000Z',
             'status' => PaymentStatus::CONFIRMED->value,
             'created_at' => '2024-12-01T08:30:00.000000Z',
         ];
@@ -63,7 +64,7 @@ class PaymentTest extends TestCase
             'discount' => 20.50,
             'amount_charged' => 100.00,
             'credit_remaining' => 10.00,
-            'due_date' => '2024-12-15T12:00:00.000000Z',
+            'due_date' => '2024-12-15T00:00:00.000000Z',
             'status' => PaymentStatus::CONFIRMED->value,
             'created_at' => '2024-12-01T08:30:00.000000Z',
             'updated_at' => '2024-12-01T08:30:00.000000Z',

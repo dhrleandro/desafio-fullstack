@@ -36,7 +36,7 @@ class EloquentPaymentRepositoryTest extends TestCase
 
     public function test_it_creates_a_payment()
     {
-        $expectedDueDate = "2024-12-09 12:17:10+00";
+        $expectedDueDate = "2024-12-09 00:00:00+00";
         $payment = Payment::fromArray([
             'contract_id' => 1,
             'plan_price' => 1000,
@@ -63,7 +63,7 @@ class EloquentPaymentRepositoryTest extends TestCase
 
     public function test_it_updates_a_payment()
     {
-        $expectedDueDate = "2024-12-09 12:17:10+00";
+        $expectedDueDate = "2024-12-09 00:00:00+00";
         $payment = EloquentPayment::create([
             'contract_id' => 1,
             'plan_price' => 1000,
