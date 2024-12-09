@@ -70,29 +70,4 @@ class PlanTest extends TestCase
 
         $this->assertEquals($data, $plan->toArray());
     }
-
-    public function test_getters_returns_correct_values()
-    {
-        $data = [
-            'id' => 20,
-            'description' => 'Enterprise Plan',
-            'number_of_clients' => 500,
-            'gigabytes_storage' => 2000,
-            'price' => 499.99,
-            'active' => true,
-            'created_at' => '2024-12-01 12:00:00 UTC',
-            'updated_at' => '2024-12-05 14:00:00 UTC',
-        ];
-
-        $plan = Plan::fromArray($data);
-
-        $this->assertEquals(20, $plan->id());
-        $this->assertEquals('Enterprise Plan', $plan->description());
-        $this->assertEquals(500, $plan->numberOfClients());
-        $this->assertEquals(2000, $plan->gigabytesStorage());
-        $this->assertEquals(499.99, $plan->price()->value());
-        $this->assertTrue($plan->active());
-        $this->assertEquals('2024-12-01 12:00:00 UTC', $plan->createdAt()->toUtcTimeString());
-        $this->assertEquals('2024-12-05 14:00:00 UTC', $plan->updatedAt()->toUtcTimeString());
-    }
 }

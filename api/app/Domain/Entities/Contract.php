@@ -8,25 +8,29 @@ use App\Domain\ValueObjects\DateTimeWrapper;
 class Contract
 {
     private ?int $id;
+    private int $userId;
     private int $planId;
     private bool $active;
     private ?DateTimeWrapper $createdAt;
 
     private function __construct(
         ?int $id,
+        int $userId,
         int $planId,
         bool $active,
         ?DateTimeWrapper $createdAt = null)
     {
         $this->id = $id;
+        $this->userId = $userId;
         $this->planId = $planId;
         $this->active = $active;
         $this->createdAt = $createdAt;
     }
 
-    public static function create(int $planId, bool $active): Contract
+    public static function create(int $userId, int $planId, bool $active): Contract
     {
         return new self(null,
+            $userId,
             $planId,
             $active,
             null
@@ -37,6 +41,7 @@ class Contract
     {
         return new self(
             $contract['id'] ?? null,
+            $contract['user_id'],
             $contract['plan_id'],
             $contract['active'],
             new DateTimeWrapper($contract['created_at']) ?? null
@@ -47,6 +52,7 @@ class Contract
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->userId,
             'plan_id' => $this->planId,
             'active' => $this->active,
             'created_at' => $this->createdAt?->toUtcTimeString() ?? ''
@@ -56,6 +62,11 @@ class Contract
     public function id(): ?int
     {
         return $this->id;
+    }
+
+    public function userId(): int
+    {
+        return $this->userId;
     }
 
     public function planId(): int

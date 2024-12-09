@@ -9,12 +9,14 @@ class ContractTest extends TestCase
 {
     public function test_create_returns_instance_with_default_values()
     {
+        $userId = 1;
         $planId = 5;
         $active = true;
 
-        $contract = Contract::create($planId, $active);
+        $contract = Contract::create($userId, $planId, $active);
 
         $this->assertNull($contract->id());
+        $this->assertEquals($userId, $contract->userId());
         $this->assertEquals($planId, $contract->planId());
         $this->assertTrue($contract->active());
         $this->assertNull($contract->createdAt());
@@ -24,6 +26,7 @@ class ContractTest extends TestCase
     {
         $data = [
             'id' => 15,
+            'user_id' => 1,
             'plan_id' => 8,
             'active' => false,
             'created_at' => '2024-12-01 10:00:00 UTC',
@@ -32,6 +35,7 @@ class ContractTest extends TestCase
         $contract = Contract::fromArray($data);
 
         $this->assertEquals($data['id'], $contract->id());
+        $this->assertEquals($data['user_id'], $contract->userId());
         $this->assertEquals($data['plan_id'], $contract->planId());
         $this->assertEquals($data['active'], $contract->active());
         $this->assertEquals($data['created_at'], $contract->createdAt()->toUtcTimeString());
@@ -41,6 +45,7 @@ class ContractTest extends TestCase
     {
         $data = [
             'id' => 15,
+            'user_id' => 1,
             'plan_id' => 8,
             'active' => true,
             'created_at' => '2024-12-01 10:00:00 UTC',
@@ -49,22 +54,5 @@ class ContractTest extends TestCase
         $contract = Contract::fromArray($data);
 
         $this->assertEquals($data, $contract->toArray());
-    }
-
-    public function test_getters_returns_correct_values()
-    {
-        $data = [
-            'id' => 15,
-            'plan_id' => 8,
-            'active' => true,
-            'created_at' => '2024-12-01 10:00:00 UTC',
-        ];
-
-        $contract = Contract::fromArray($data);
-
-        $this->assertEquals(15, $contract->id());
-        $this->assertEquals(8, $contract->planId());
-        $this->assertTrue($contract->active());
-        $this->assertEquals('2024-12-01 10:00:00 UTC', $contract->createdAt()->toUtcTimeString());
     }
 }

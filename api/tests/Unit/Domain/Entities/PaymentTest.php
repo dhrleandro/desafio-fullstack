@@ -81,31 +81,4 @@ class PaymentTest extends TestCase
 
         $this->assertEquals(PaymentStatus::CONFIRMED, $payment->status());
     }
-
-    public function test_getters_returns_correct_values()
-    {
-        $data = [
-            'id' => 15,
-            'contract_id' => 3,
-            'plan_price' => 150.75,
-            'discount' => 15.75,
-            'amount_charged' => 135.00,
-            'credit_remaining' => 5.00,
-            'due_date' => '2024-12-20 18:00:00 UTC',
-            'status' => PaymentStatus::PENDING,
-            'created_at' => '2024-12-05 09:00:00 UTC',
-        ];
-
-        $payment = Payment::fromArray($data);
-
-        $this->assertEquals($data['id'], $payment->id());
-        $this->assertEquals($data['contract_id'], $payment->contractId());
-        $this->assertEquals($data['plan_price'], $payment->planPrice()->value());
-        $this->assertEquals($data['discount'], $payment->discount()->value());
-        $this->assertEquals($data['amount_charged'], $payment->amountCharged()->value());
-        $this->assertEquals($data['credit_remaining'], $payment->creditRemaining()->value());
-        $this->assertEquals($data['due_date'], $payment->dueDate()->toUtcTimeString());
-        $this->assertEquals($data['status'], $payment->status());
-        $this->assertEquals($data['created_at'], $payment->createdAt()->toUtcTimeString());
-    }
 }
