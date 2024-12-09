@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use \Illuminate\Http\JsonResponse;
 use App\Models\Plan;
 
 class PlanController extends Controller
 {
-    /**
-     * Display a listing of the plans.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        return Plan::all();
+        return response()->json(Plan::all());
     }
 }

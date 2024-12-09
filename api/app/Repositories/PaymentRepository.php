@@ -13,5 +13,5 @@ interface PaymentRepository
      * @param int $id
      * @return Payment[]
      */
-    public function fetchByContractId(int $contract_id): array;
+    public function fetchByContractId(int $contractId): array;
 }

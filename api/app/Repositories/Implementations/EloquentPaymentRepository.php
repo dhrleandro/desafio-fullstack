@@ -39,9 +39,9 @@ class EloquentPaymentRepository implements PaymentRepository
      * @param int $id
      * @return Payment[]
      */
-    public function fetchByContractId(int $contract_id): array
+    public function fetchByContractId(int $contractId): array
     {
-        $eloquentPayments = EloquentPayment::where('contract_id', '=', $contract_id)->get();
+        $eloquentPayments = EloquentPayment::where('contract_id', '=', $contractId)->get();
 
         $payments = [];
         foreach ($eloquentPayments as $eloquentPayment) {
