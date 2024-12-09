@@ -15,8 +15,6 @@ class Contract extends Model
         'active',
     ];
 
-    public $timestamps = false; // Já está utilizando 'created_at' manualmente
-
     public function plan()
     {
         return $this->belongsTo(Plan::class);

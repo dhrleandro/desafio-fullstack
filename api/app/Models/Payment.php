@@ -19,8 +19,6 @@ class Payment extends Model
         'status',
     ];
 
-    public $timestamps = false; // Já está utilizando 'created_at' manualmente
-
     public function contract()
     {
         return $this->belongsTo(Contract::class);
