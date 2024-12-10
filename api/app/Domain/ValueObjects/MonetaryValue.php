@@ -22,6 +22,11 @@ class MonetaryValue
         return $this->value;
     }
 
+    public function toString(): string
+    {
+        return sprintf("%.2f", $this->value);
+    }
+
     public function round()
     {
         $this->value = round($this->value, 2, PHP_ROUND_HALF_UP);

@@ -36,7 +36,7 @@ class ContractPayments
     ): ContractPayments
     {
         return new self(
-            $contract,
+            clone $contract,
             $payments ? self::clonePayments($payments) : []
         );
     }
@@ -61,6 +61,11 @@ class ContractPayments
     public function getPayments(): array
     {
         return $this->clonePayments($this->payments);
+    }
+
+    public function cancelContract(): void
+    {
+        $this->contract->cancel();
     }
 
     public function confirmAllPaymentsBeforeDate(DateTimeWrapper $date): void

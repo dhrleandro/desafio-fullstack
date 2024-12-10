@@ -64,6 +64,16 @@ class Contract
         ];
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function cancel(): void
+    {
+        $this->active = false;
+    }
+
     public function id(): ?int
     {
         return $this->id;

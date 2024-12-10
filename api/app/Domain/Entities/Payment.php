@@ -10,7 +10,7 @@ use App\Domain\ValueObjects\PaymentStatus;
 class Payment
 {
     private ?int $id;
-    private int $contractId;
+    private ?int $contractId;
     private MonetaryValue $planPrice;
     private MonetaryValue $discount;
     private MonetaryValue $amountCharged;
@@ -22,7 +22,7 @@ class Payment
 
     private function __construct(
         ?int $id,
-        int $contractId,
+        ?int $contractId,
         MonetaryValue $planPrice,
         MonetaryValue $discount,
         MonetaryValue $amountCharged,
@@ -47,7 +47,7 @@ class Payment
     }
 
     public static function create(
-        int $contractId,
+        ?int $contractId,
         MonetaryValue $planPrice,
         DateTimeWrapper $dueDate): Payment
     {
@@ -71,15 +71,15 @@ class Payment
     public static function fromArray(array $payment): Payment
     {
         $id = $payment['id'] ?? null;
-        $contractId = $payment['contract_id'];
+        $contractId = $payment['contract_id'] ?? null;
         $planPrice = MonetaryValue::create($payment['plan_price']);
         $discount = MonetaryValue::create($payment['discount']);
-        $amountCharged =  MonetaryValue::create($payment['amount_charged']);
+        $amountCharged = MonetaryValue::create($payment['amount_charged']);
         $creditRemaining = MonetaryValue::create($payment['credit_remaining']);
-        $dueDate = new DateTimeWrapper($payment['due_date']);
+        $dueDate = DateTimeWrapper::create($payment['due_date']);
         $status = PaymentStatus::from($payment['status']);
-        $createdAt = isset($payment["created_at"]) ? new DateTimeWrapper($payment["created_at"]) : null;
-        $updatedAt = isset($payment["updated_at"]) ? new DateTimeWrapper($payment["updated_at"]) : null;
+        $createdAt = isset($payment["created_at"]) ? DateTimeWrapper::create($payment["created_at"]) : null;
+        $updatedAt = isset($payment["updated_at"]) ? DateTimeWrapper::create($payment["updated_at"]) : null;
 
         return new self($id,
             $contractId,
@@ -97,12 +97,12 @@ class Payment
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'contract_id' => $this->contractId,
-            'plan_price' => $this->planPrice->value(),
-            'discount' => $this->discount->value(),
-            'amount_charged' => $this->amountCharged->value(),
-            'credit_remaining' => $this->creditRemaining->value(),
+            'id' => $this->id ?? '',
+            'contract_id' => $this->contractId ?? '',
+            'plan_price' => $this->planPrice->toString(),
+            'discount' => $this->discount->toString(),
+            'amount_charged' => $this->amountCharged->toString(),
+            'credit_remaining' => $this->creditRemaining->toString(),
             'due_date' => $this->dueDate?->toUtcTimeString() ?? '',
             'status' => $this->status->value,
             'created_at' => $this->createdAt?->toUtcTimeString() ?? '',
@@ -118,6 +118,31 @@ class Payment
     public function cancelPayment(): void
     {
         $this->status = PaymentStatus::CANCELED;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setContractId(int $contractId): void
+    {
+        $this->contractId = $contractId;
+    }
+
+    public function setDiscount(MonetaryValue $discount): void
+    {
+        $this->discount = $discount;
+    }
+
+    public function setAmountCharged(MonetaryValue $amountCharged): void
+    {
+        $this->amountCharged = $amountCharged;
+    }
+
+    public function setCreditRemaining(MonetaryValue $creditRemaining): void
+    {
+        $this->creditRemaining = $creditRemaining;
     }
 
     public function id(): ?int

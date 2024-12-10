@@ -92,6 +92,11 @@ class Plan
         ];
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function id(): ?int
     {
         return $this->id;
