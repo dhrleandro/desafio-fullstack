@@ -4,11 +4,13 @@ namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\Contract;
 use App\Domain\Entities\ContractPayments;
+use App\Domain\Entities\Payment;
 use App\Domain\Entities\Plan;
 use App\Domain\Entities\User;
 use App\Domain\Services\ContractPaymentService;
 use App\Domain\ValueObjects\DateTimeWrapper;
 use App\Domain\ValueObjects\MonetaryValue;
+use App\Domain\ValueObjects\PaymentStatus;
 use PHPUnit\Framework\TestCase;
 
 class ContractPaymentServiceTest extends TestCase
@@ -18,7 +20,7 @@ class ContractPaymentServiceTest extends TestCase
         return new ContractPaymentService();
     }
 
-    public function test_create_contract_plan_when_plan_has_no_id_throws_domain_exception()
+    public function test_create_contract_when_plan_has_no_id_throws_domain_exception()
     {
         $plan = Plan::create(
             'Premium Plan',
@@ -38,7 +40,7 @@ class ContractPaymentServiceTest extends TestCase
         );
     }
 
-    public function test_create_contract_plan_when_plan_inactive_throws_domain_exception()
+    public function test_create_contract_when_plan_inactive_throws_domain_exception()
     {
         $plan = Plan::create(
             'Premium Plan',
@@ -59,7 +61,7 @@ class ContractPaymentServiceTest extends TestCase
         );
     }
 
-    public function test_create_contract_plan_when_user_has_active_contract_throws_domain_exception()
+    public function test_create_contract_when_user_has_active_contract_throws_domain_exception()
     {
         $user = User::create(30, 58);
         $plan = Plan::create(
@@ -69,6 +71,7 @@ class ContractPaymentServiceTest extends TestCase
             MonetaryValue::create(10),
             true
         );
+        $plan->setId(1);
 
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage(ContractPaymentService::EX_USER_HAS_ACTIVE_CONTRACT);
@@ -78,5 +81,32 @@ class ContractPaymentServiceTest extends TestCase
             $plan,
             DateTimeWrapper::create('2021-01-01 00:00:00 UTC')
         );
+    }
+
+    public function test_create_contract_should_create_contract_with_payment_confirmed()
+    {
+        $plan = Plan::create(
+            'Premium Plan',
+            20,
+            10,
+            MonetaryValue::create(10),
+            true
+        );
+        $plan->setId(1);
+
+        $result = $this->contractPaymentService()->createContract(
+            User::create(1, null),
+            $plan,
+            DateTimeWrapper::create('2021-01-01 00:00:00 UTC')
+        );
+
+        $this->assertInstanceOf(ContractPayments::class, $result);
+        $this->assertInstanceOf(Contract::class, $result->getContract());
+        $this->assertIsArray($result->getPayments());
+        $this->assertCount(1, $result->getPayments());
+
+        $payment = $result->getPayments()[0];
+        $this->assertInstanceOf(Payment::class, $payment);
+        $this->assertEquals(PaymentStatus::CONFIRMED, $payment->status());
     }
 }
