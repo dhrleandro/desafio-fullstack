@@ -58,4 +58,21 @@ class ContractTest extends TestCase
 
         $this->assertEquals($data, $contract->toArray());
     }
+
+    public function test_set_id_sets_correct_id()
+    {
+        $id = 12;
+        $contract = Contract::create(1, 5, true);
+        $contract->setId($id);
+
+        $this->assertEquals($id, $contract->id());
+    }
+
+    public function test_cancel_sets_active_false()
+    {
+        $contract = Contract::create(1, 5, true);
+        $contract->cancel();
+
+        $this->assertFalse($contract->active());
+    }
 }

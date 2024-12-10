@@ -87,4 +87,49 @@ class PaymentTest extends TestCase
 
         $this->assertEquals(PaymentStatus::CONFIRMED->value, $payment->status()->value);
     }
+
+    public function test_set_id_sets_correct_id()
+    {
+        $id = 12;
+        $payment = Payment::create(1, MonetaryValue::create(100), new DateTimeWrapper('2024-12-15T12:00:00.000000Z'));
+        $payment->setId($id);
+
+        $this->assertEquals($id, $payment->id());
+    }
+
+    public function test_set_contract_id_sets_correct_id()
+    {
+        $contractId = 15;
+        $payment = Payment::create(1, MonetaryValue::create(100), new DateTimeWrapper('2024-12-15T12:00:00.000000Z'));
+        $payment->setContractId($contractId);
+
+        $this->assertEquals($contractId, $payment->contractId());
+    }
+
+    public function test_set_discount_sets_correct_value()
+    {
+        $discount = MonetaryValue::create(15);
+        $payment = Payment::create(1, MonetaryValue::create(100), new DateTimeWrapper('2024-12-15T12:00:00.000000Z'));
+        $payment->setDiscount($discount);
+
+        $this->assertEquals($discount, $payment->discount());
+    }
+
+    public function test_set_amount_charged_sets_correct_value()
+    {
+        $amountCharged = MonetaryValue::create(15);
+        $payment = Payment::create(1, MonetaryValue::create(100), new DateTimeWrapper('2024-12-15T12:00:00.000000Z'));
+        $payment->setAmountCharged($amountCharged);
+
+        $this->assertEquals($amountCharged, $payment->amountCharged());
+    }
+
+    public function test_set_credit_remaining_sets_correct_value()
+    {
+        $creditRemaining = MonetaryValue::create(15);
+        $payment = Payment::create(1, MonetaryValue::create(100), new DateTimeWrapper('2024-12-15T12:00:00.000000Z'));
+        $payment->setCreditRemaining($creditRemaining);
+
+        $this->assertEquals($creditRemaining, $payment->creditRemaining());
+    }
 }

@@ -70,4 +70,19 @@ class PlanTest extends TestCase
 
         $this->assertEquals($data, $plan->toArray());
     }
+
+    public function test_set_id_sets_correct_id()
+    {
+        $id = 20;
+        $plan = Plan::create(
+            'Premium Plan',
+            20,
+            10,
+            MonetaryValue::create(10),
+            false
+        );
+        $plan->setId($id);
+
+        $this->assertEquals($id, $plan->id());
+    }
 }

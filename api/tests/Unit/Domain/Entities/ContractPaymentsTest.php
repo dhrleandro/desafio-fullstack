@@ -166,4 +166,16 @@ class ContractPaymentsTest extends TestCase
 
         $this->assertEquals($expected, $lastConfirmedPayment->toArray());
     }
+
+    public function test_cancel_contract_should_cancel_contract()
+    {
+        $contract = Contract::create(1, 1, true);
+        $contractPayments = ContractPayments::create($contract, []);
+        $this->assertEquals($contract, $contractPayments->getContract());
+
+        $contractPayments->cancelContract();
+        
+        $this->assertNotEquals($contract, $contractPayments->getContract());
+        $this->assertFalse($contractPayments->getContract()->active());
+    }
 }

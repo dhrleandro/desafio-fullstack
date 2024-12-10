@@ -55,4 +55,11 @@ class MonetaryValueTest extends TestCase
 
         $this->assertEquals($expected, $monetary->value());
     }
+
+    public function test_to_string_returns_correct_value()
+    {
+        $expected = '172.58';
+        $monetary = MonetaryValue::create(172.579997);
+        $this->assertEquals($expected, $monetary->toString());
+    }
 }
