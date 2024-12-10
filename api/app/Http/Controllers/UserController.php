@@ -15,6 +15,14 @@ class UserController extends Controller
      */
     public function show()
     {
-        return User::find(1);
+        $userId = config("api.user_id");
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(["message" => "User not found"], 404);
+        }
+
+        return response()->json(User::where("id", $userId)->first());
     }
 }
