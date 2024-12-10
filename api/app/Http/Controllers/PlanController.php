@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ResponseException;
 use \Illuminate\Http\JsonResponse;
 use App\Models\Plan;
 

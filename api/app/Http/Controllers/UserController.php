@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ResponseException;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,9 +21,13 @@ class UserController extends Controller
         $user = User::find($userId);
 
         if (!$user) {
-            return response()->json(["message" => "User not found"], 404);
+            throw new ResponseException(
+                'User not found',
+                404,
+                ['user_id'=> $userId]
+            );
         }
 
-        return response()->json(User::where("id", $userId)->first());
+        return response()->json($user);
     }
 }
