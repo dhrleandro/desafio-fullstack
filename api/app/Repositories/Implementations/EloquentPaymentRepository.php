@@ -5,7 +5,6 @@ namespace App\Repositories\Implementations;
 use App\Repositories\PaymentRepository;
 use App\Domain\Entities\Payment;
 use App\Models\Payment as EloquentPayment;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentPaymentRepository implements PaymentRepository
 {

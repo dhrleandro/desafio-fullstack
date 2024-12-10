@@ -42,16 +42,10 @@ class ContractPaymentService
             $plan->price(),
             $firstPaymentDueDate->copy()
         );
+        
+        // simulate PIX payment confirmation
+        $payment->confirmPayment();
 
         return ContractPayments::create($contract, [$payment]);
     }
-
-    // public function confirmPayment(Payment $payment, Contract $contract): void
-    // {
-    //     if ($payment->contractId() !== $contract->id()) {
-    //         throw new \DomainException(self::EX_PAYMENT_NOT_RELATED_TO_THIS_CONTRACT);
-    //     }
-
-    //     $contract->confirmPayment($payment);
-    // }
 }

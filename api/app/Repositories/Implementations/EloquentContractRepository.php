@@ -5,7 +5,6 @@ namespace App\Repositories\Implementations;
 use App\Domain\Entities\Contract;
 use App\Models\Contract as EloquentContract;
 use App\Repositories\ContractRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentContractRepository implements ContractRepository
 {
