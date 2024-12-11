@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CQS\Commands;
 use App\CQS\Queries;
+use App\Domain\Entities\Contract;
 use App\Domain\Entities\User;
 use App\Domain\ValueObjects\DateTimeWrapper;
 use App\Exceptions\ResponseException;
@@ -36,8 +37,9 @@ class ContractController extends Controller
             );
         }
 
-        $contracts = $this->queries->allContracts($user);
-        return response()->json($contracts);
+        $contracts = $this->queries->allContracts($user->id());
+        $contractsArray = array_map(fn (Contract $contract) => $contract->toArray(), $contracts);
+        return response()->json($contractsArray);
     }
 
     public function store(Request $request): JsonResponse
