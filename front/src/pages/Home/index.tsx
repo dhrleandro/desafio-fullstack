@@ -1,7 +1,11 @@
+import { ThemeSwitch } from "@/components/ThemeSwitch"
+
+
 export const Home = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-orange-400 text-2xl">
+    <div className="bg-primaryBackground flex items-center justify-center h-screen">
+      <ThemeSwitch />
+      <h1 className="text-accent text-2xl">
         Desafio para Desenvolvedor - Inmediam
       </h1>
     </div>

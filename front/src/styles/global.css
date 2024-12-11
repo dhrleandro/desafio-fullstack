@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* --primaryBackground: 
+--secondaryBackground: 
+--primaryText: 
+--secondaryText: 
+--accent: 
+--accentText:  */
+
+:root {
+    --primaryBackground: #ededed;
+    --secondaryBackground: #ffffff;
+    --primaryText: #000000;
+    --secondaryText: #515151;
+    --accent: #ff6f00;
+    --accentText: #ffffff;
+}
+
+.theme-dark {
+    --primaryBackground: #141415;
+    --secondaryBackground: #2a2b2d;
+    --primaryText: #ffffff;
+    --secondaryText: #a3a3a3;
+    --accent: #ff6f00;
+    --accentText: #ffffff;
+}
