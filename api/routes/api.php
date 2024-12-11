@@ -29,6 +29,12 @@ Route::apiResource('plans', PlanController::class, ['only' => 'index']);
 
 Route::apiSingleton('user', UserController::class, ['only' => 'show']);
 
-Route::apiResource('contracts', ContractController::class, ['only' => 'index']);
+Route::apiResource('contracts', ContractController::class, ['only' => 'index', 'store']);
 
-Route::apiResource('payments', PaymentController::class, ['only' => 'index']);
+Route::controller(ContractController::class)->group(function () {
+    Route::get('/contracts', 'index');
+    // Route::get('/contracts/{id}', 'show');
+    Route::post('/contracts', 'store');
+});
+
+Route::apiResource('payments', PaymentController::class, ['only' => 'index', 'store']);

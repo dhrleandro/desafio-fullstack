@@ -6,7 +6,6 @@ namespace App\Repositories\Implementations;
 use App\Repositories\UserRepository;
 use App\Domain\Entities\User;
 use App\Models\User as EloquentUser;
-use function PHPUnit\Framework\throwException;
 
 class EloquentUserRepository implements UserRepository
 {

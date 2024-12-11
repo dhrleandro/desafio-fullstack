@@ -13,7 +13,7 @@ interface ContractRepository
      * @param int $id
      * @return Contract[]
      */
-    public function fetchAll(): array;
+    public function fetchAll(int $userId): array;
     /**
      * @param int $id
      * @return Contract[]

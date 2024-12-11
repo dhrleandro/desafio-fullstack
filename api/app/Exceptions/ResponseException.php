@@ -1,7 +1,8 @@
 <?php
  
 namespace App\Exceptions;
- 
+
+use Symfony\Component\HttpFoundation\Response;
 use Exception;
 use Log;
  
@@ -10,7 +11,7 @@ class ResponseException extends Exception
     private int $statusCode;
     private array $context;
 
-    public function __construct($message, $statusCode = 404, ?array $context = [], $code = 0, \Throwable $previous = null) {
+    public function __construct($message, ?array $context = [], $statusCode = Response::HTTP_NOT_FOUND, $code = 0, \Throwable $previous = null) {
         parent::__construct($message, $code, $previous);
         $this->statusCode = $statusCode;
         $this->context = $context ?? [];
@@ -34,7 +35,7 @@ class ResponseException extends Exception
      */
     public function render($request)
     {
-        Log::warning("Response exception.",[
+        Log::warning("ResponseException: {$this->getMessage()}",[
             'status_code' => $this->statusCode,
             'message'=> $this->getMessage(),
             ...$this->context

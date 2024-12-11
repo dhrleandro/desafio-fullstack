@@ -7,9 +7,7 @@ use App\Domain\Entities\Payment;
 use App\Domain\Entities\Plan;
 use App\Domain\Entities\User;
 use App\Domain\Entities\ContractPayments;
-use App\Domain\Services\Response\ContractPayments\SwitchContractResponse;
 use App\Domain\ValueObjects\DateTimeWrapper;
-use App\Domain\ValueObjects\MonetaryValue;
 
 class ContractPaymentService
 {

@@ -110,7 +110,7 @@ class EloquentContractRepositoryTest extends TestCase
         EloquentContract::create(['user_id' => 1, 'plan_id' => 1, 'active' => true]);
         EloquentContract::create(['user_id' => 1, 'plan_id' => 1, 'active' => false]);
 
-        $contracts = $this->repository->fetchAll();
+        $contracts = $this->repository->fetchAll(1);
 
         $this->assertCount(2, $contracts);
     }

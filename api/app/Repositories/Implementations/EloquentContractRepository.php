@@ -37,9 +37,9 @@ class EloquentContractRepository implements ContractRepository
      * @param int $id
      * @return Contract[]
      */
-    public function fetchAll(): array
+    public function fetchAll(int $userId): array
     {
-        $eloquentContracts = EloquentContract::all();
+        $eloquentContracts = EloquentContract::where('user_id', '=', $userId)->get();
         $contracts = [];
 
         foreach ($eloquentContracts as $eloquentContract) {

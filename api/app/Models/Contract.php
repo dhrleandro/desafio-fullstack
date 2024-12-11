@@ -15,12 +15,17 @@ class Contract extends Model
         'active',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function plan()
     {
         return $this->belongsTo(Plan::class);
     }
 
-    public function payments()
+    public function payment()
     {
         return $this->hasMany(Payment::class);
     }

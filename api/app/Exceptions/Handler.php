@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use \Symfony\Component\HttpFoundation\Response;
+use Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,6 +48,30 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (Throwable $e, $request) {
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    'error' => true,
+                    'message' => $e->getMessage(),
+                    'errors' => $e->errors()
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            if ($e instanceof \DomainException) {
+                return response()->json([
+                    'error' => true,
+                    'message' => $e->getMessage()
+                ], Response::HTTP_CONFLICT);
+            }
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Internal Server Error',
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         });
     }
 }

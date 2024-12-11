@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\CQS\Queries;
 use App\Exceptions\ResponseException;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected Queries $queries;
+
+    public function __construct(Queries $queries)
+    {
+        $this->queries = $queries;
+    }
 
     /**
      * Display the resource.
@@ -18,12 +23,10 @@ class UserController extends Controller
     {
         $userId = config("api.user_id");
 
-        $user = User::find($userId);
-
+        $user = $this->queries->userById($userId);
         if (!$user) {
             throw new ResponseException(
                 'User not found',
-                404,
                 ['user_id'=> $userId]
             );
         }
