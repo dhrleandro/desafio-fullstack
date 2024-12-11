@@ -3,10 +3,11 @@
 namespace App\CQS;
 
 use App\Domain\Entities\User;
+use App\Exceptions\ResponseException;
 use App\Repositories\ContractRepository;
 use App\Repositories\PaymentRepository;
 use \App\Domain\Entities\Contract;
-use \App\Domain\Entities\Payment;
+use \App\Models\Payment as EloquentPayment;
 use \App\Domain\Entities\Plan;
 use App\Repositories\PlanRepository;
 use App\Repositories\UserRepository;
@@ -51,14 +52,34 @@ class Queries
     /**
      * @return Contract[]
      */
-    public function allContracts(User $user): array {
-        return $this->contractRepository->fetchAll($user->id());
+    public function allContracts(int $userId): array {
+        return $this->contractRepository->fetchAll($userId);
     }
 
     /**
-     * @return Payment[]
+     * @return EloquentPayment[]
      */
-    public function allPaymentsByContractId(int $contractId): array {
-        return $this->paymentRepository->fetchByContractId($contractId);
+    public function allPayments(int $userId): array {
+        $user = $this->userRepository->getById($userId);
+        if (!$user) {
+            throw new ResponseException(
+                'User not found',
+                ['user_id'=> $userId]
+            );
+        }
+
+        if (!$user->hasActiveContract()) {
+            return [];
+        }
+
+        $eloquentPayments = EloquentPayment::whereHas('contract.user', function ($query) use ($userId) {
+            $query->where('id', $userId)->orderBy('created_at', 'asc');
+        })->get();
+
+        if (count($eloquentPayments) === 0) {
+            return [];
+        }
+
+        return $eloquentPayments->toArray();
     }
 }

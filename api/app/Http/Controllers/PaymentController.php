@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use \Illuminate\Http\JsonResponse;
-use App\UseCases\PaymentUseCases;
+use App\CQS\Queries;
+use App\Exceptions\ResponseException;
+use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
 {
-    protected PaymentUseCases $paymentUseCases;
+    protected Queries $queries;
 
-    public function __construct(PaymentUseCases $paymentUseCases)
+    public function __construct(Queries $queries)
     {
-        $this->paymentUseCases = $paymentUseCases;
+        $this->queries = $queries;
     }
 
     public function index(): JsonResponse
     {
-        $payments = $this->paymentUseCases->getAllPaymentsByContractId(1);
+        $userId = config("api.user_id");
+        $payments = $this->queries->allPayments($userId);
         return response()->json($payments);
     }
 }

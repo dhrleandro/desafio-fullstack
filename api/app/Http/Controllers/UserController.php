@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CQS\Queries;
 use App\Exceptions\ResponseException;
+use App\Models\User as EloquentUser;
 
 class UserController extends Controller
 {
@@ -22,8 +23,8 @@ class UserController extends Controller
     public function show()
     {
         $userId = config("api.user_id");
+        $user = EloquentUser::find($userId);
 
-        $user = $this->queries->userById($userId);
         if (!$user) {
             throw new ResponseException(
                 'User not found',
