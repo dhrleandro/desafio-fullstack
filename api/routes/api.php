@@ -33,8 +33,8 @@ Route::apiResource('contracts', ContractController::class, ['only' => 'index', '
 
 Route::controller(ContractController::class)->group(function () {
     Route::get('/contracts', 'index');
-    // Route::get('/contracts/{id}', 'show');
     Route::post('/contracts', 'store');
+    Route::post('/contracts/switch-plan', 'switchPlan');
 });
 
 Route::apiResource('payments', PaymentController::class, ['only' => 'index', 'store']);

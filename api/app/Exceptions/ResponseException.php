@@ -38,7 +38,9 @@ class ResponseException extends Exception
         Log::warning("ResponseException: {$this->getMessage()}",[
             'status_code' => $this->statusCode,
             'message'=> $this->getMessage(),
-            ...$this->context
+            'file' => $this->getFile(),
+            'line' => $this->getLine(),
+            ...$this->context,
         ]);
 
         return response()->json(

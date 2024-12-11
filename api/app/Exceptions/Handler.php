@@ -4,8 +4,10 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
-use \Symfony\Component\HttpFoundation\Response;
+use \Illuminate\Http\Request;
 use Log;
+use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,7 +52,7 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (Throwable $e, $request) {
+        $this->renderable(function (Throwable $e, Request $request) {
             if ($e instanceof ValidationException) {
                 return response()->json([
                     'error' => true,
@@ -64,6 +66,10 @@ class Handler extends ExceptionHandler
                     'error' => true,
                     'message' => $e->getMessage()
                 ], Response::HTTP_CONFLICT);
+            }
+
+            if ($e instanceof NotFoundHttpException) {    
+                return response()->json([], 404);
             }
 
             if ($request->is('api/*')) {

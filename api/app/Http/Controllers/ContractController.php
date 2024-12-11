@@ -61,7 +61,7 @@ class ContractController extends Controller
 
             $result = $this->commands->contractPlan($userId, $data['plan_id'], $today);
             if (!$result) {
-                throw new ResponseException('Could not create contract', 500);
+                throw new ResponseException('Could not create contract');
             }
 
             DB::commit();
@@ -71,6 +71,41 @@ class ContractController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error("ContractControler->store error: {$e->getMessage()}. Rollback...");
+            throw $e;
+        }
+    }
+
+    public function switchPlan(Request $request): JsonResponse
+    {
+        Log::info("ContractControler->switchPlan started");
+        try {
+
+            DB::beginTransaction();
+
+            $data = $request->validate([
+                'simulated_datetime' => 'date_format:Y-m-d',
+                'plan_id' => 'required',
+            ]);
+
+            $today = isset($data['simulated_datetime'])
+                ? new DateTimeWrapper($data['simulated_datetime'])
+                : DateTimeWrapper::create();
+            $today->setTime(0,0,0,0);
+
+            $userId = config("api.user_id");
+
+            $result = $this->commands->switchPlan($userId, $data['plan_id'], $today);
+            if (!$result) {
+                throw new ResponseException('Could not switch contract to new plan');
+            }
+
+            DB::commit();
+
+            return response()->json();
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error("ContractControler->switchPlan error: {$e->getMessage()}. Rollback...");
             throw $e;
         }
     }
