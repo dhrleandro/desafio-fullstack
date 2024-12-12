@@ -1,6 +1,6 @@
 import { Plan } from "@/api/interfaces"
 
-export const PlanItem = ({ plan }: { plan: Plan }) => {
+export const PlanItem = ({ plan, to }: { plan: Plan, to?: string }) => {
   return (
     <div className="cursor-pointer relative w-[354px] h-[326px] bg-secondaryBackground text-secondaryText rounded-lg shadow-lg before:absolute before:top-[28px] before:left-0 before:w-[80%] before:h-[72px] before:bg-accent z-0 active:bg-gray-900/20">
       <div className="relative z-[1] mt-[1.88rem] px-4 text-2xl font-bold text-accentText">

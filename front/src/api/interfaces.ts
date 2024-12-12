@@ -5,9 +5,29 @@ export interface RequestResult<T> {
   data: T | null
 }
 
+export interface PostContract {
+  simulated_datetime?: string;
+  plan_id: number;
+}
+
+export interface PostSwitchContract {
+  simulated_datetime?: string;
+  plan_id: number;
+}
+
+export interface Contract {
+  id: number;
+  user_id: number;
+  plan_id: number;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface User {
   name: string;
   email: string;
+  active_contract?: Contract
 }
 
 export interface Plan {

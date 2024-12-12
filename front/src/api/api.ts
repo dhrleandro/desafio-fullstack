@@ -44,3 +44,21 @@ export const fetchData = async <T>(uri: string): PromiseResult<T> => {
     return result(true, false, error.message);
   }
 };
+
+export const postData = async <A, T>(uri: string, data: A): PromiseResult<T> => {
+  try {
+    const response = await axios.post(`${url}${uri}`, data);
+    return result(false, true, response.data, response.status);
+
+  } catch (error: any) {
+    if (error.response) {
+      return result(true, true, error.response.data, error.response.status);
+    }
+
+    if (error.request) {
+      return result(true, false, error.request);
+    }
+
+    return result(true, false, error.message);
+  }
+};
