@@ -1,8 +1,6 @@
-import { ThemeSwitch } from "../ThemeSwitch"
+import { ThemeSwitch } from "@/components/ThemeSwitch"
 import { NavItem } from "./NavItem"
-
-import Favicon from "../../assets/favicon.png"
-import { Button } from "../Button"
+import Favicon from "@/assets/favicon.png"
 
 export const Navbar = ({ className }: { className?: string }) => {
   return (

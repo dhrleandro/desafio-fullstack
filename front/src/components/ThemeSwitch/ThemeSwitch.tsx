@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Theme, ThemeContext, ThemeContextInterface } from "@/context";
-import Dropdown from "./Dropdown";
+import Dropdown from "@/components/Dropdown";
 import { IoIosSettings, IoIosSunny, IoIosMoon } from "react-icons/io";
 
 export const ThemeSwitch = () => {

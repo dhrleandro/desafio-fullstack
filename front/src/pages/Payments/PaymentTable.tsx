@@ -2,7 +2,7 @@ import { Payment } from "@/api/interfaces";
 
 const formatPaymentDate = (str: string): string => {
   const date = new Date(str);
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  return date.toLocaleDateString();
 }
 
 const formatStatus = (status: string): string => {
@@ -40,7 +40,7 @@ export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
               <td className="px-6 py-4 text-sm text-primaryText">R$ {payment.discount.replace(".", ",")}</td>
               <td className="px-6 py-4 text-sm text-primaryText">R$ {payment.amount_charged.replace(".", ",")}</td>
               <td className="px-6 py-4 text-sm text-primaryText">{formatStatus(payment.status)}</td>
-              <td className="px-6 py-4 text-sm text-primaryText">{formatPaymentDate(payment.created_at)}</td>
+              <td className="px-6 py-4 text-sm text-primaryText">{formatPaymentDate(payment.due_date)}</td>
             </tr>
           ))}
         </tbody>
