@@ -44,13 +44,3 @@ export const fetchData = async <T>(uri: string): PromiseResult<T> => {
     return result(true, false, error.message);
   }
 };
-
-// export const getUser = async (): PromiseResult<User> => {
-//   const response = await fetchData<User>('/user');
-//     if (!response.data) return response;
-  
-//     const user = {
-//       name: response.data?.name ?? '',
-//       email: response.data?.email ?? ''
-//     }
-// }

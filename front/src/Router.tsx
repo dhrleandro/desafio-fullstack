@@ -9,7 +9,7 @@ export function Router() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}/>
-        <Route path="/user" element={<Profile />}/>
+        <Route path="/profile" element={<Profile />}/>
       </Route>
     </Routes>
   )
