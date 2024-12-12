@@ -29,12 +29,11 @@ Route::apiResource('plans', PlanController::class, ['only' => 'index']);
 
 Route::apiSingleton('user', UserController::class, ['only' => 'show']);
 
-Route::apiResource('contracts', ContractController::class, ['only' => 'index', 'store']);
-
 Route::controller(ContractController::class)->group(function () {
     Route::get('/contracts', 'index');
     Route::post('/contracts', 'store');
     Route::post('/contracts/switch-plan', 'switchPlan');
+    Route::post('/contracts/calculate-payment', 'calculatePayment');
 });
 
 Route::apiResource('payments', PaymentController::class, ['only' => 'index', 'store']);

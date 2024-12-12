@@ -28,7 +28,7 @@ class UserController extends Controller
             $query->where('active', true)
                  ->orderBy('created_at', 'desc')
                  ->limit(1)
-                 ->select('id', 'user_id');
+                 ->select('id', 'user_id', 'plan_id');
         }])->find($userId);
 
         if (!$user) {
