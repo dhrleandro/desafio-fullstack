@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 use Exception;
-use Log;
+use Illuminate\Support\Facades\Log;
  
 class ResponseException extends Exception
 {

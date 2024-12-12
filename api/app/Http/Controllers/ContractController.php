@@ -12,7 +12,8 @@ use DB;
 use Illuminate\Http\Request;
 use \Illuminate\Http\JsonResponse;
 use App\UseCases\ContractUseCases;
-use Log;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContractController extends Controller
 {
@@ -68,7 +69,7 @@ class ContractController extends Controller
 
             DB::commit();
 
-            return response()->json();
+            return response()->json([], Response::HTTP_CREATED);
 
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -103,11 +104,51 @@ class ContractController extends Controller
 
             DB::commit();
 
-            return response()->json();
+            return response()->json([], Response::HTTP_CREATED);
 
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error("ContractControler->switchPlan error: {$e->getMessage()}. Rollback...");
+            throw $e;
+        }
+    }
+
+    public function calculatePayment(Request $request): JsonResponse
+    {
+        Log::info("ContractControler->paymentRequest started");
+        try {
+
+            $data = $request->validate([
+                'simulated_datetime' => 'date_format:Y-m-d',
+                'plan_id' => 'required',
+            ]);
+
+            $today = isset($data['simulated_datetime'])
+                ? new DateTimeWrapper($data['simulated_datetime'])
+                : DateTimeWrapper::create();
+            $today->setTime(0,0,0,0);
+
+            $userId = config("api.user_id");
+            $user = $this->queries->userById($userId);
+            if (!$user) {
+                throw new ResponseException(
+                    'User not found',
+                    ['user_id'=> $userId]
+                );
+            }
+
+            $payment = $user->hasActiveContract()
+                ? $this->queries->simulatePaymentRequestSwitchPlan($user, $data['plan_id'], $today)
+                : $this->queries->simulatePaymentRequestContractPlan($user, $data['plan_id'], $today);
+            
+            if (!$payment) {
+                throw new ResponseException('Could not simulate payment request');
+            }
+
+            return response()->json($payment->toArray(), Response::HTTP_OK);
+
+        } catch (\Throwable $e) {
+            Log::error("ContractControler->paymentRequest error: {$e->getMessage()}. Rollback not needed...");
             throw $e;
         }
     }

@@ -40,6 +40,7 @@ class ContractPaymentService
             $plan->price(),
             $firstPaymentDueDate->copy()
         );
+        $payment->setAmountCharged($plan->price());
         
         // simulate PIX payment confirmation
         $payment->confirmPayment();

@@ -53,6 +53,8 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (Throwable $e, Request $request) {
+            Log::error($e);
+
             if ($e instanceof ValidationException) {
                 return response()->json([
                     'error' => true,

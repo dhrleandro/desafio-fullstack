@@ -2,7 +2,10 @@
 
 namespace App\CQS;
 
+use App\Domain\Entities\Payment;
 use App\Domain\Entities\User;
+use App\Domain\Services\ContractPaymentService;
+use App\Domain\Services\SwitchContractService;
 use App\Exceptions\ResponseException;
 use App\Repositories\ContractRepository;
 use App\Repositories\PaymentRepository;
@@ -11,6 +14,8 @@ use \App\Models\Payment as EloquentPayment;
 use \App\Domain\Entities\Plan;
 use App\Repositories\PlanRepository;
 use App\Repositories\UserRepository;
+use App\Domain\Entities\ContractPayments;
+use App\Domain\ValueObjects\DateTimeWrapper;
 
 class Queries
 {
@@ -19,16 +24,23 @@ class Queries
     private ContractRepository $contractRepository;
     private PaymentRepository $paymentRepository;
 
+    private ContractPaymentService $contractPaymentService;
+    private SwitchContractService $switchContractService;
+
     public function __construct(
         UserRepository $userRepository,
         PlanRepository $planRepository,
         ContractRepository $contractRepository,
-        PaymentRepository $paymentRepository)
+        PaymentRepository $paymentRepository,
+        ContractPaymentService $contractPaymentService,
+        SwitchContractService $switchContractService)
     {
         $this->userRepository = $userRepository;
         $this->planRepository = $planRepository;
         $this->contractRepository = $contractRepository;
         $this->paymentRepository = $paymentRepository;
+        $this->contractPaymentService = $contractPaymentService;
+        $this->switchContractService = $switchContractService;
     }
 
     public function userById(int $userId): ?User
@@ -81,5 +93,73 @@ class Queries
         }
 
         return $eloquentPayments->toArray();
+    }
+
+    public function simulatePaymentRequestContractPlan(User $user, int $planId, DateTimeWrapper $today): ?Payment
+    {
+        $plan = $this->planRepository->getById($planId);
+        if (!$plan) {
+            throw new ResponseException(
+                'Plan not found',
+                ['plan_id'=> $planId]
+            );
+        }
+
+        $result = $this->contractPaymentService->createContract($user, $plan, $today);
+
+        if (count($result->getPayments()) === 0) {
+            return null;
+        }
+
+        return $result->getPayments()[0];
+    }
+
+    public function simulatePaymentRequestSwitchPlan(User $user, int $newPlanId, DateTimeWrapper $today): ?Payment
+    {
+        if (!$user->hasActiveContract()) {
+            throw new ResponseException(
+                'User has no active contract',
+                ['user_id'=> $user->id()]
+            );
+        }
+
+        $contract = $this->contractRepository->getById($user->activeContractId());
+        if (!$contract) {
+            throw new ResponseException(
+                'Contract not found',
+                ['contract_id'=> $user->activeContractId()]
+            );
+        }
+
+        $newPlan = $this->planRepository->getById($newPlanId);
+        if (!$newPlanId) {
+            throw new ResponseException(
+                'Plan not found',
+                ['plan_id'=> $newPlanId]
+            );
+        }
+
+        $payments = $this->paymentRepository->fetchByContractId($contract->id());
+        if (count($payments) === 0) {
+            throw new ResponseException(
+                'Contract has no payments',
+                ['contract_id'=> $contract->id()]
+            );
+        }
+
+        $contractPayments = ContractPayments::create($contract, $payments);
+
+        $result = $this->switchContractService->switchContract(
+            $user,
+            $contractPayments,
+            $newPlan,
+            $today
+        );
+
+        if (count($result->newContract->getPayments()) === 0) {
+            return null;
+        }
+
+        return $result->newContract->getPayments()[0];
     }
 }
