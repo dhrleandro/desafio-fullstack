@@ -2,6 +2,7 @@ import { ThemeSwitch } from "../ThemeSwitch"
 import { NavItem } from "./NavItem"
 
 import Favicon from "../../assets/favicon.png"
+import { Button } from "../Button"
 
 export const Navbar = ({ className }: { className?: string }) => {
   return (
@@ -13,8 +14,9 @@ export const Navbar = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex h-full flex-col md:flex-row items-center justify-between gap-4 text-primaryText">
-        <NavItem to="/" text="Planos"/>
-        <NavItem text="Contratos"/>
+        <NavItem to="/" text="Início"/>
+        <NavItem to="/contracts" text="Meus Contratos"/>
+        <NavItem to="/payments" text="Meus Pagamentos"/>
         <NavItem to="/profile" text="Meu Perfil"/>
         <ThemeSwitch/>
       </div>

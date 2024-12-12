@@ -40,3 +40,16 @@ export interface Plan {
   created_at: string
   updated_at: string
 }
+
+export interface Payment {
+  id: string
+  contract_id: string
+  plan_price: string
+  discount: string
+  amount_charged: string
+  credit_remaining: string
+  due_date: string
+  status: string
+  created_at: string
+  updated_at: string
+}

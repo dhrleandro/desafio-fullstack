@@ -6,13 +6,18 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@/components/Spinner/Spinner";
 import { HireDetails } from "./HireDetails";
 import { useApiUser } from "@/hooks/useApiUser";
+import { DateSelector } from "./DateSelector";
 
 export const HirePlan = () => {
+  const { planId } = useParams();
+
   const { loading, plans } = useApiPlans();
   const { user } = useApiUser();
 
   const [plan, setPlan] = useState<Plan | null>(null);
-  const { planId } = useParams();
+  const [simulatedDate, setSimulatedDate] = useState<string>('');
+  const [showDateSelector, setShowDateSelector] = useState<boolean>(true);
+
 
   const getActivePlan = (): Plan | null => {
     if (!user || !user.active_contract || !plans) return null;
@@ -27,12 +32,22 @@ export const HirePlan = () => {
     if (!plan) return;
     setPlan(plan);
   }, [plans]);
-  
+
+  const onDateSelected = (date: string) => {
+    setSimulatedDate(date);
+  }
+
   return (
     <Container title={`Contrar Plano: ${plan?.description}`} loading={loading} backTo="/">
+      {showDateSelector && <DateSelector onChange={onDateSelected}/>}
       <div className="w-full flex justify-center items-center">
         {!plan && <Spinner />}
-        {plan && <HireDetails activePlan={getActivePlan()} newPlan={plan} />}
+        {plan && <HireDetails
+          activePlan={getActivePlan()}
+          newPlan={plan}
+          simulatedDate={simulatedDate}
+          onSuccessCalculatePayment={() => setShowDateSelector(false)}
+        />}
       </div>
     </Container>
   )
