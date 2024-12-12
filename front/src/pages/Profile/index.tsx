@@ -5,7 +5,7 @@ export const Profile = () => {
   const { isUserLoading, user } = useApiUser();
 
   return (
-    <Container title="Meu Perfil" loading={isUserLoading}>
+    <Container title="Meu Perfil" loading={isUserLoading} backTo="/">
       <p className="text-xl">
         <strong>Nome:</strong> {user?.name}
       </p>

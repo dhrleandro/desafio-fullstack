@@ -13,9 +13,9 @@ export const Navbar = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex h-full flex-col md:flex-row items-center justify-between gap-4 text-primaryText">
-        <NavItem text="Planos"/>
+        <NavItem to="/" text="Planos"/>
         <NavItem text="Contratos"/>
-        <NavItem text="Meu Perfil"/>
+        <NavItem to="/profile" text="Meu Perfil"/>
         <ThemeSwitch/>
       </div>
 

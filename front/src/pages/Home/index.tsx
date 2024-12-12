@@ -1,6 +1,6 @@
 import { Container } from "@/components/Container";
 import { useApiPlans } from "@/hooks/useApiPlans";
-import { PlanItem } from "./Plan";
+import { PlanItem } from "@/components/Plan/PlanItem";
 
 export const Home = () => {
   const { loading, plans } = useApiPlans();
