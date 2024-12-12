@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\CQS\Commands;
 use App\CQS\Queries;
 use App\Domain\Entities\Contract;
-use App\Domain\Entities\User;
+use App\Models\Contract as EloquentContract;
 use App\Domain\ValueObjects\DateTimeWrapper;
 use App\Exceptions\ResponseException;
 use DB;
@@ -38,9 +38,11 @@ class ContractController extends Controller
             );
         }
 
-        $contracts = $this->queries->allContracts($user->id());
-        $contractsArray = array_map(fn (Contract $contract) => $contract->toArray(), $contracts);
-        return response()->json($contractsArray);
+        $contracts = EloquentContract::with(['plan' => function ($query) {
+            $query->select('id', 'description');
+        }])->where('user_id', $userId)->orderBy('created_at', 'asc')->get();
+
+        return response()->json($contracts);
     }
 
     public function store(Request $request): JsonResponse

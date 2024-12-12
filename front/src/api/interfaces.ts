@@ -1,3 +1,5 @@
+import { LargeNumberLike } from "crypto";
+
 export interface RequestResult<T> {
   error: boolean,
   response: boolean,
@@ -20,8 +22,9 @@ export interface Contract {
   user_id: number;
   plan_id: number;
   active: boolean;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
+  plan?: Pick<Plan, 'id' | 'description'>
 }
 
 export interface User {
