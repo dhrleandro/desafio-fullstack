@@ -1,8 +1,9 @@
-import { Children, ReactNode, useState } from 'react'
+import { Children, ReactNode, useRef, useState } from 'react'
 import { Menu } from './Menu';
 import { IoMdArrowDropdown } from "react-icons/io";
 
 import { CloseDropdownContext } from './CloseDropdownContext';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface RootProps {
   title: string;
@@ -11,6 +12,7 @@ interface RootProps {
 
 export const Root = ({ title, children }: RootProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -20,8 +22,10 @@ export const Root = ({ title, children }: RootProps) => {
     setIsOpen(false);
   };
 
+  useClickOutside(modalRef, closeDropdown);
+
   return (
-    <div className='py-6 pb-8'>
+    <div ref={modalRef} className='py-6 pb-8'>
       <div className="relative inline-block">
         <button
           type="button"

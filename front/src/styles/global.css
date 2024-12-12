@@ -26,3 +26,15 @@
     --accent: #ff6f00;
     --accentText: #ffffff;
 }
+
+.theme-dark * {
+    box-shadow: none !important;
+}
+
+body, html {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
+}
+
