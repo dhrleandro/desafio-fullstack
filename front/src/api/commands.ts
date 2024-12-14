@@ -18,7 +18,7 @@ const utcDateTime = (date?: Date): string|undefined => {
 const hirePlan = async (planId: number, simulatedDatetime?: Date): Promise<boolean> => {
   const post = {
     plan_id: planId,
-    simulated_datetime: simulatedDatetime?.toISOString()
+    simulated_datetime: utcDateTime(simulatedDatetime)
   } as PostContract;
 
   const result = await postData<PostContract, null>('/contracts', post);
@@ -28,7 +28,7 @@ const hirePlan = async (planId: number, simulatedDatetime?: Date): Promise<boole
 const switchPlan = async (planId: number, simulatedDatetime?: Date): Promise<boolean> => {
   const post = {
     plan_id: planId,
-    simulated_datetime: simulatedDatetime?.toISOString()
+    simulated_datetime: utcDateTime(simulatedDatetime)
   } as PostContract;
 
   const result = await postData<PostContract, null>('/contracts/switch-plan', post);
