@@ -28,6 +28,7 @@ export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Valor Plano</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Disconto</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Valor Cobrado</th>
+            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Crédito Remanescente</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Status</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Data de Vencimento</th>
           </tr>
@@ -39,6 +40,7 @@ export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
               <td className="px-6 py-4 text-sm text-primaryText">R$ {payment.plan_price.replace(".", ",")}</td>
               <td className="px-6 py-4 text-sm text-primaryText">R$ {payment.discount.replace(".", ",")}</td>
               <td className="px-6 py-4 text-sm text-primaryText">R$ {payment.amount_charged.replace(".", ",")}</td>
+              <td className="px-6 py-4 text-sm text-primaryText">R$ {payment.credit_remaining.replace(".", ",")}</td>
               <td className="px-6 py-4 text-sm text-primaryText">{formatStatus(payment.status)}</td>
               <td className="px-6 py-4 text-sm text-primaryText">{formatPaymentDate(payment.due_date)}</td>
             </tr>
