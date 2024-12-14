@@ -69,7 +69,7 @@ class Queries
     }
 
     /**
-     * @return Payments[]
+     * @return Payment[]
      */
     public function allPayments(int $userId): array {
         $user = $this->userRepository->getById($userId);

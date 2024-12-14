@@ -15,9 +15,9 @@ export const ContractTable = ({ contracts }: { contracts: Contract[] }) => {
       <table className="w-full bg-secondaryBackground border border-accent">
         <thead>
           <tr className="bg-accent border-b border-accent shadow-md">
-            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">ID</th>
+            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Número</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Plano</th>
-            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Ativo</th>
+            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Ativo?</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Data</th>
           </tr>
         </thead>

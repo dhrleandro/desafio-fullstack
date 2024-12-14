@@ -55,9 +55,9 @@ export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
       <table className="w-full bg-secondaryBackground border border-accent">
         <thead>
           <tr className="bg-accent border-b border-accent shadow-md">
-            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">ID Contrato</th>
-            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Valor Plano</th>
-            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Disconto</th>
+            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Num. do Contrato</th>
+            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Valor do Plano</th>
+            <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Desconto</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Valor Cobrado</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Crédito Remanescente</th>
             <th className="px-6 py-3 text-left text-sm font-bold text-accentText">Status</th>
