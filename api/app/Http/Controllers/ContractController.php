@@ -53,14 +53,13 @@ class ContractController extends Controller
             DB::beginTransaction();
 
             $data = $request->validate([
-                'simulated_datetime' => 'date_format:Y-m-d',
+                'simulated_datetime' => 'date_format:Y-m-d H:i:s',
                 'plan_id' => 'required',
             ]);
 
             $today = isset($data['simulated_datetime'])
                 ? new DateTimeWrapper($data['simulated_datetime'])
                 : DateTimeWrapper::create();
-            $today->setTime(0,0,0,0);
 
             $userId = config("api.user_id");
 
@@ -88,14 +87,13 @@ class ContractController extends Controller
             DB::beginTransaction();
 
             $data = $request->validate([
-                'simulated_datetime' => 'date_format:Y-m-d',
+                'simulated_datetime' => 'date_format:Y-m-d H:i:s',
                 'plan_id' => 'required',
             ]);
 
             $today = isset($data['simulated_datetime'])
                 ? new DateTimeWrapper($data['simulated_datetime'])
                 : DateTimeWrapper::create();
-            $today->setTime(0,0,0,0);
 
             $userId = config("api.user_id");
 
@@ -121,14 +119,13 @@ class ContractController extends Controller
         try {
 
             $data = $request->validate([
-                'simulated_datetime' => 'date_format:Y-m-d',
+                'simulated_datetime' => 'date_format:Y-m-d H:i:s',
                 'plan_id' => 'required',
             ]);
 
             $today = isset($data['simulated_datetime'])
                 ? new DateTimeWrapper($data['simulated_datetime'])
                 : DateTimeWrapper::create();
-            $today->setTime(0,0,0,0);
 
             $userId = config("api.user_id");
             $user = $this->queries->userById($userId);
