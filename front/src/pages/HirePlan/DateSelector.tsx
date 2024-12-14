@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 
-export const DateSelector = ({ onChange }: { onChange?: (date: string) => void }) => {
+export const DateSelector = ({ onChange }: { onChange?: (date: Date) => void }) => {
   const [value, setValue] = useState(new Date().toISOString().slice(0, 10));
 
   useEffect(() => {
-    onChange?.(value);
+    if (!value) return;
+    const today = new Date();
+    const time = `T${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+    const dt = new Date(`${value}${time}`);
+    onChange?.(dt);
   }, [value]);
 
   return (

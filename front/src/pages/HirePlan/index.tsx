@@ -15,7 +15,7 @@ export const HirePlan = () => {
   const { user } = useApiUser();
 
   const [plan, setPlan] = useState<Plan | null>(null);
-  const [simulatedDate, setSimulatedDate] = useState<string>('');
+  const [simulatedDate, setSimulatedDate] = useState<Date>(new Date());
   const [showDateSelector, setShowDateSelector] = useState<boolean>(true);
 
 
@@ -33,7 +33,7 @@ export const HirePlan = () => {
     setPlan(plan);
   }, [plans]);
 
-  const onDateSelected = (date: string) => {
+  const onDateSelected = (date: Date) => {
     setSimulatedDate(date);
   }
 

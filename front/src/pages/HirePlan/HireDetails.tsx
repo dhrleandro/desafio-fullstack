@@ -8,7 +8,7 @@ import commands from "@/api/commands";
 interface HireDetailsProps {
   activePlan?: Plan | null;
   newPlan: Plan;
-  simulatedDate: string;
+  simulatedDate: Date;
   onSuccessCalculatePayment?: () => void;
 }
 

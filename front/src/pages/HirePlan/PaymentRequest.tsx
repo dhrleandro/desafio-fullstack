@@ -10,7 +10,7 @@ import qrcode from "@/assets/qrcode.png";
 interface PaymentRequestProps {
   userHasActiveContract: boolean;
   newPlan: Plan;
-  simulatedDate: string;
+  simulatedDate: Date;
   payment: Payment;
 }
 
