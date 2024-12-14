@@ -19,6 +19,10 @@ const formatStatus = (status: string): string => {
 }
 
 export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
+  if (!payments || payments.length === 0) {
+    return <h1 className="text-primaryText text-lg font-normal">Nenhum pagamento encontrado.</h1>
+  }
+
   return (
     <div className="overflow-x-auto shadow-md">
       <table className="w-full bg-secondaryBackground border border-accent">

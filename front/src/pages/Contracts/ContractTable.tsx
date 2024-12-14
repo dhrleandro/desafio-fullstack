@@ -6,6 +6,10 @@ const formatContractDate = (str: string): string => {
 }
 
 export const ContractTable = ({ contracts }: { contracts: Contract[] }) => {
+  if (!contracts || contracts.length === 0) {
+    return <h1 className="text-primaryText text-lg font-normal">Nenhum contrato encontrado.</h1>
+  }
+
   return (
     <div className="overflow-x-auto shadow-md">
       <table className="w-full bg-secondaryBackground border border-accent">
