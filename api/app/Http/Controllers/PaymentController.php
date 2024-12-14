@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CQS\Queries;
-use App\Exceptions\ResponseException;
+use App\Domain\Entities\Payment;
 use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
@@ -19,6 +19,9 @@ class PaymentController extends Controller
     {
         $userId = config("api.user_id");
         $payments = $this->queries->allPayments($userId);
-        return response()->json($payments);
+
+        $paymentsArray = array_map(fn (Payment $payment) => $payment->toArray(), $payments);
+
+        return response()->json($paymentsArray);
     }
 }

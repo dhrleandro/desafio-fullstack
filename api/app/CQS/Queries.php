@@ -69,7 +69,7 @@ class Queries
     }
 
     /**
-     * @return EloquentPayment[]
+     * @return Payments[]
      */
     public function allPayments(int $userId): array {
         $user = $this->userRepository->getById($userId);
@@ -92,7 +92,9 @@ class Queries
             return [];
         }
 
-        return $eloquentPayments->toArray();
+        $payments = array_map(fn (array $eloquentPayment) => Payment::fromArray($eloquentPayment), $eloquentPayments->toArray());
+
+        return $payments;
     }
 
     public function simulatePaymentRequestContractPlan(User $user, int $planId, DateTimeWrapper $today): ?Payment
