@@ -6,7 +6,7 @@ export const Payments = () => {
   const { loading, payments } = useApiPayments();
 
   return (
-    <Container title="Meus Contratos" loading={loading} backTo="/">
+    <Container title="Meus Pagamentos" loading={loading} backTo="/">
       <div className="w-full mt-2">
         {payments && <PaymentTable payments={payments} />}
       </div>
