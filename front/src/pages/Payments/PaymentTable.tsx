@@ -1,8 +1,35 @@
 import { Payment } from "@/api/interfaces";
 
+/**
+ * https://stackoverflow.com/questions/673905/how-can-i-determine-a-users-locale-within-the-browser/78786023#78786023
+ */
+export function determineLocale(): string {
+  // All modern browsers support this. Should match what's used by localeCompare() etc.
+  const intl = window.Intl;
+  if (intl !== undefined) {
+      return intl.NumberFormat().resolvedOptions().locale;
+  }
+
+  // Fall back to ranked choice locales, which are configured in the browser but aren't necessarily
+  // what's used in functions like localeCompare().
+  const languages = navigator.languages as (string[] | undefined);
+  if (languages !== undefined && languages.length > 0) {
+      return languages[0];
+  }
+
+  // Old standard.
+  return navigator.language ?? "en-US";
+}
+
+/**
+ * Returns UTC date string in the user's locale.
+ * 
+ * The due date is always midnight. Since UTC ranges from -12 to +14 (less than 24 hours),
+ * we can display the date in UTC with the user's local formatting.
+ */
 const formatPaymentDate = (str: string): string => {
   const date = new Date(str);
-  return date.toLocaleDateString();
+  return date.toLocaleDateString(determineLocale(), { timeZone: 'UTC' });
 }
 
 const formatStatus = (status: string): string => {
