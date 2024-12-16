@@ -6,6 +6,7 @@
 </h1>
 
 <p align="center">
+  <a href="#solução-do-desafio">Solução do Desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#descrição-do-desafio">Descrição do Desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#tarefas">Tarefas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-configuração-do-ambiente">Configuração do ambiente</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -14,6 +15,49 @@
 
 ### Por favor, faça fork desse repositório para iniciar o exercício!
 ### Tempo máximo esperado para resolução: 7 dias
+
+### Solução do Desafio
+
+#### Rotas
+
+1. GET /api/plans - Retorna a lista de planos
+2. GET /api/user - Retorna o usuário "logado"
+4. GET /api/contracts - Retorna a lista de contratos do usuário "logado"
+5. POST /api/calculate-payment - Calcula o valor a pagar para o usuário "logado" ao assinar um plano ou fazer a troca
+6. POST /api/contracts - Assina um plano para o usuário "logado" caso não tenha um plano ativo
+7. POST /api/contracts/switch-plan - Desativa o plano atual e assina um novo plano para o usuário "logado"
+8. GET /api/payments - Retorna a lista de pagamentos do usuário "logado"
+
+#### Testes da API (Docker)
+
+Para executar os testes da API (unitários e features), exucute os comandos abaixo:
+```shell
+docker compose build --no-cache
+docker compose up -d
+docker compose exec api /usr/local/bin/api-test
+```
+
+Para parar:
+```shell
+docker compose down -v --remove-orphans
+```
+
+#### Execução da Aplicação com Docker
+
+Para executar a aplicação completa, execute os comandos abaixo:
+```shell
+docker compose build --no-cache
+docker compose up -d
+```
+
+URL da API: http://localhost:8000/api
+
+URL do SPA: http://localhost:5173
+
+Para parar:
+```shell
+docker compose down -v --remove-orphans
+```
 
 ## Descrição do Desafio
 
