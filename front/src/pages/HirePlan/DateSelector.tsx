@@ -1,14 +1,26 @@
 import { useEffect, useState } from "react";
+import datetime from "@/lib/datetime";
 
 export const DateSelector = ({ onChange }: { onChange?: (date: Date) => void }) => {
-  const [value, setValue] = useState(new Date().toISOString().slice(0, 10));
+  const [value, setValue] = useState(datetime.localDateTimeToString(new Date(), false));
 
   useEffect(() => {
     if (!value) return;
-    const today = new Date();
-    const time = `T${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
-    const dt = new Date(`${value}${time}`);
-    onChange?.(dt);
+
+    try {
+      const split = value.split('-');
+      if (split.length !== 3) throw new Error('Invalid date format');
+
+      const fullYear = parseInt(split[0]);
+      const month = parseInt(split[1]);
+      const day = parseInt(split[2]);
+      const date = datetime.localDateAsIfItWereUTC(fullYear, month, day);
+
+      console.log({value, date: date.toLocaleString(), utc1: date.toISOString(), utc: datetime.UTCDateTimeToString(date, false)});
+      onChange?.(date);
+    } catch (error) {
+      console.error(error);
+    }
   }, [value]);
 
   return (
