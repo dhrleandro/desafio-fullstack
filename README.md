@@ -18,6 +18,10 @@
 
 ### Solução do Desafio
 
+Desktop                    |  Mobile
+:-------------------------:|:-------------------------:
+![](./desktop.gif)  |  ![](./mobile.gif)
+
 #### Rotas
 
 1. GET /api/plans - Retorna a lista de planos
