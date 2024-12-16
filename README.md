@@ -32,7 +32,7 @@
 
 Para executar os testes da API (unitários e features), exucute os comandos abaixo:
 ```shell
-docker compose build --no-cache
+docker compose build
 docker compose up -d
 docker compose exec api /usr/local/bin/api-test
 ```
@@ -46,7 +46,7 @@ docker compose down -v --remove-orphans
 
 Para executar a aplicação completa, execute os comandos abaixo:
 ```shell
-docker compose build --no-cache
+docker compose build
 docker compose up -d
 ```
 
