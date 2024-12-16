@@ -1,0 +1,14 @@
+FROM node:22.11-alpine
+
+WORKDIR /app
+
+COPY ./front/package.json .
+
+RUN npm install
+
+COPY ./docker/docker-front.sh /usr/local/bin/docker-front
+RUN chmod +x /usr/local/bin/docker-front
+
+EXPOSE 5173
+
+CMD [ "/usr/local/bin/docker-front" ]

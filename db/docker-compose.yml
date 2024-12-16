@@ -1,9 +1,0 @@
-services:
-  postgresql:
-    image: "postgres"
-    ports:
-      - "5432:5432"
-    environment:
-      - "POSTGRES_DB=desafio"
-      - "POSTGRES_USER=user"
-      - "POSTGRES_PASSWORD=password"
